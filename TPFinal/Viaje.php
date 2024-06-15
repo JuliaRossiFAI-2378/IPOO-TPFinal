@@ -190,6 +190,28 @@ class Viaje{
         }
         return $resp;
     }
+
+    public function buscar($id){
+        $baseDatos = new BDViajes();
+        $resp = false;
+        $sql = "SELECT * FROM viaje WHERE idviaje=".$id;
+        if($baseDatos->conectarBD()){
+            if($baseDatos->consulta($sql)){
+                if(($result = $baseDatos->registro()) != null){
+                    $this->setIdViaje($id);
+                    $this->setDestino($result['destino']);
+                    $this->setCantMaxPasajeros($result['cantmaxpasajeros']);
+                    $this->setNumEmpleado(['rnumeroempleado']);
+                    $this->setCostoViaje($result['importe']);
+                    $resp = true;
+                }else  
+                    $this->setMensajeError($baseDatos->getERROR());
+            }else
+                $this->setMensajeError($baseDatos->getERROR());
+        }else
+            $this->setMensajeError($baseDatos->getERROR());
+        return $resp;
+    }
 }
 
 ?>
