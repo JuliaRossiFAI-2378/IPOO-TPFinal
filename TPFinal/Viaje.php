@@ -254,6 +254,21 @@ class Viaje{
             $this->setMensajeError($baseDatos->getERROR());
         return $resp;
     }
+
+    public function modificar(){
+        $baseDatos = new BDViajes();
+        $resp = false;
+        $sql = "UPDATE viaje SET idviaje=".$this->getIdViaje().", destino='".$this->getDestino()."', cantmaxpasajeros=".
+            $this->getCantMaxPasajeros().", rnumeroempleado=".$this->getNumEmpleado().", importe=".$this->getCostoViaje();
+        if($baseDatos->conectarBD()){
+            if($baseDatos->consulta($sql)){
+                $resp = true;
+            }else  
+                $this->setMensajeError($baseDatos->getERROR());
+        }else
+            $this->setMensajeError($baseDatos->getERROR());
+        return $resp;
+    }
 }
 
 ?>
