@@ -14,23 +14,10 @@ if($responsable->ingresar()){
 }
 //$pas1 = new PasajerosEstandares("Juan","Perez",123123,321321,20,65464);
 //$pas2 = new PasajerosEspeciales("Macarena","Lopez",879798,546465,60,12332,true,false,true);
-$pasajeros = [$pas1,$pas2];
-$viaje = new Viaje(13,"Neuquen",5,[],$responsable,20000,0);
-/**foreach($pasajeros as $pas){
-    $viaje->venderPasaje($pas);
-} */
 
-function requiereONo($cadena){
-    while(strcasecmp($cadena, "si") != 0 && strcasecmp($cadena, "no") != 0){
-        echo "La respuesta debe ser \"Si\" o \"No\", vuelva a ingresar su respuesta: ";
-        $cadena = trim(fgets(STDIN));
-    }
-    $requiere = true;
-    if(strcasecmp($cadena,"no") == 0){
-        $requiere = false;
-    }
-    return $requiere;
-}
+$viaje = new Viaje();
+$viaje->cargar(13,"Neuquen",5,[],$responsable->getNumEmpleado(),20000,0);
+
 function solicitarNumeroEntre($minimo,$maximo){
     $numero = trim(fgets(STDIN));
     while (!($numero>=$minimo && $numero<=$maximo) || !(is_numeric($numero))){
