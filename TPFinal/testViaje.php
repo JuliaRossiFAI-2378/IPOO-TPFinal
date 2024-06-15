@@ -101,13 +101,14 @@ do{
                 $telefonoPasajero = trim(fgets(STDIN));
                 echo "Ingrese el id del viaje: ";
                 $idViaje = trim(fgets(STDIN));
+                $viaje->buscar($idViaje);
                 $nuevoPasajero = new Pasajeros();
                 $nuevoPasajero->cargar($nombrePasajero,$apellidoPasajero,$documentoPasajero,$telefonoPasajero,$idViaje);
                 if(!$viaje->agregarPasajero($nuevoPasajero)){
                     //$viaje->agregarPasajero($nuevoPasajero); 
-                    echo "El pasajero fue agregado exitosamente.";
+                    echo "\nEl pasajero fue agregado exitosamente.\n";
                 }else{
-                    echo "Ya existe un pasajero con ese dni.";
+                    echo "\nYa existe un pasajero con ese dni.\n";
                 }
             }else{
                 echo "No se pueden agregar mas pasajeros, el viaje ya alcanzo su capacidad maxima.";

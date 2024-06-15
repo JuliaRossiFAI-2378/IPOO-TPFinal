@@ -78,7 +78,7 @@ class Viaje{
         $cad = "\nIdViaje: ".$this->getIdViaje()."\nDestino: ".$this->getDestino()."\nCantidad maxima de pasajeros: ".
         $this->getCantMaxPasajeros()."\nCantidad actual de pasajeros: ".count($this->getColPasajeros()).
         "\nCosto del viaje: $".$this->getCostoViaje()."\nRecaudacion total del viaje: $".$this->getSumaCostos().
-        "\n\tInformacion de los pasajeros";
+        "\n\t\tInformacion de los pasajeros";
         $pasajeros = $this->getColPasajeros();
         for($i=0; $i<count($pasajeros); $i++){
             $cad .= "\n\tPasajero ".$i+1 .$pasajeros[$i];
