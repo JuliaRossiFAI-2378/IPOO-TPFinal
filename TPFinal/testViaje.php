@@ -73,7 +73,7 @@ do{
             echo "Ingrese el nuevo destino de viaje: ";
             $nuevoDestinoViaje = trim(fgets(STDIN));
             $viaje->setDestino($nuevoDestinoViaje);
-            $viaje->modificar()
+            $viaje->modificar();
             break;
         case 4:
             echo "Ingrese la nueva cantidad maxima de pasajeros: ";
