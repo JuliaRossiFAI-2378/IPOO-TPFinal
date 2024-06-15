@@ -35,7 +35,7 @@ function seleccionarOpcion(){
   echo "[3] Modificar destino del viaje.\n";
   echo "[4] Modificar cantidad maxima de pasajeros.\n";
   echo "[5] Modificar el costo del viaje\n";
-  echo "[6] Agregar un pasajero.\n";
+  echo "[6] Agregar un pasajero.\n";//funcionando por el momento
   echo "[7] Eliminar un pasajero.\n";
   echo "[8] Modificar el dato de un pasajero.\n";
   echo "[9] Ver la informacion de un viaje.\n";//funcional, por ahora
