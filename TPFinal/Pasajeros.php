@@ -15,7 +15,7 @@ class Pasajeros extends Persona{
     }
     public function __toString()
     {
-        $cad = parent::__toString()."\nID viaje: ".$this->getIdViaje();
+        $cad = parent::__toString()."\nID viaje: ".$this->getIdViaje()."\n";
         return $cad;
     }
 

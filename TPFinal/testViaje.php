@@ -36,7 +36,7 @@ function seleccionarOpcion(){
   echo "[4] Modificar cantidad maxima de pasajeros.\n";
   echo "[5] Modificar el costo del viaje\n";
   echo "[6] Agregar un pasajero.\n";//funcionando por el momento
-  echo "[7] Eliminar un pasajero.\n";
+  echo "[7] Eliminar un pasajero.\n";//funcionando por el momento
   echo "[8] Modificar el dato de un pasajero.\n";
   echo "[9] Ver la informacion de un viaje.\n";//funcional, por ahora
   echo "[10] Ver los datos de los pasajeros.\n";
@@ -111,10 +111,13 @@ do{
                     echo "\nYa existe un pasajero con ese dni.\n";
                 }
             }else{
-                echo "No se pueden agregar mas pasajeros, el viaje ya alcanzo su capacidad maxima.";
+                echo "\nNo se pueden agregar mas pasajeros, el viaje ya alcanzo su capacidad maxima.\n";
             }
             break;
         case 7:
+            echo "Ingrese el id del viaje en el que desea eliminar un pasajero: ";
+            $idViaje = trim(fgets(STDIN));
+            $viaje->buscar($idViaje);
             $pasajeros = $viaje->getColPasajeros();
             $cantPasajeros = count($pasajeros);
             if ($cantPasajeros == 0){

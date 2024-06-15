@@ -150,6 +150,7 @@ class Viaje{
     }
     public function eliminarPasajero($numPasajero){
         $colPasajeros = $this->getColPasajeros();
+        $colPasajeros[$numPasajero]->eliminar();
         unset($colPasajeros[$numPasajero]);
         $colPasajeros = array_values($colPasajeros);
         $this->setColPasajeros($colPasajeros);
