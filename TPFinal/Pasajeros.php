@@ -55,7 +55,7 @@ class Pasajeros extends Persona{
                 $resultadoPasajeros = [];
                 while($tupla = $baseDatos->registro()){
                     $pasajero = new Pasajeros();
-                    $pasajero->buscar($tupla['documento']);
+                    $pasajero->buscar($tupla['pdocumento']);
                     $resultadoPasajeros[] = $pasajero;
                 }
             }else
