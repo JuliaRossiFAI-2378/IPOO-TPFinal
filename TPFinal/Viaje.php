@@ -212,6 +212,34 @@ class Viaje{
             $this->setMensajeError($baseDatos->getERROR());
         return $resp;
     }
+
+    public function listar($condicion=""){
+        $baseDatos = new BDViajes();
+        $resultados = null;
+        $sql = "SELECT * FROM viaje";
+        if($condicion != ""){
+            $sql .= " WHERE " .$condicion;
+        }
+        if($baseDatos->conectarBD()){
+            if($baseDatos->consulta($sql)){
+                $resultados = [];
+                while($tupla = $baseDatos->registro()){
+                    $idViaje = $tupla['idviaje'];
+                    $destino = $tupla['destino'];
+                    $cantMaxPasajeros = $tupla['cantmaxpasajeros'];
+                    $numeroEmpleado = $tupla['rnumeroempleado'];
+                    $importe = $tupla['importe'];
+                    $viaje = new Viaje();
+                    $viaje->cargar($idViaje,$destino,$cantMaxPasajeros,[],$numeroEmpleado,$importe,0);
+                    //falta ver como manejar el tema de la colPasajeros y la sumaCostos 
+                    $resultados[] = $viaje;
+                }
+            }else
+                $this->setMensajeError($baseDatos->getERROR());
+        }else
+            $this->setMensajeError($baseDatos->getERROR());
+        return $resultados;
+    }
 }
 
 ?>
