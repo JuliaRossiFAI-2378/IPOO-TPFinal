@@ -240,6 +240,20 @@ class Viaje{
             $this->setMensajeError($baseDatos->getERROR());
         return $resultados;
     }
+
+    public function eliminar(){
+        $baseDatos = new BDViajes();
+        $resp = false;
+        $sql = "DELETE FROM viaje WHERE idviaje=".$this->getIdViaje();
+        if($baseDatos->conectarBD()){
+            if($baseDatos->consulta($sql))
+                $resp = true;
+            else
+                $this->setMensajeError($baseDatos->getERROR());
+        }else
+            $this->setMensajeError($baseDatos->getERROR());
+        return $resp;
+    }
 }
 
 ?>
