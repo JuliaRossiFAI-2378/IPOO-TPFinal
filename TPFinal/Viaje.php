@@ -104,9 +104,8 @@ class Viaje{
                 $i = 0;
                 while($i<$cantPasajeros && !$seEncontro){
                     $dniPasajero = $pasajeros[$i]->getDocumento();
-                    if($dniPasajero == $nuevoDato){
+                    if($dniPasajero == $nuevoDato)
                         $seEncontro = true;
-                    }
                     $i++;
                 }
                 if(!$seEncontro){
@@ -139,6 +138,12 @@ class Viaje{
         }
         if(!$seEncontro){
             $colPasajeros[] = $nuevoPasajero;
+            $nombre = $nuevoPasajero->getNombre();
+            $apellido = $nuevoPasajero->getApellido();
+            $documento = $nuevoPasajero->getDocumento();
+            $telefono = $nuevoPasajero->getTelefono();
+            $nuevoPasajero->cargar($nombre,$apellido,$documento,$telefono,$this->idViaje);
+            $nuevoPasajero->ingresar();
             $this->setColPasajeros($colPasajeros);
         }
         return $seEncontro;    
