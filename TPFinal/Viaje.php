@@ -38,7 +38,13 @@ class Viaje{
         $this->cantMaxPasajeros = $newCantMaxPasajeros;
     }
     public function getColPasajeros(){
-        return $this->colPasajeros;
+        $colPasajeros = [];
+        $pasajero = new Pasajeros();
+        $sql = "idviaje=".$this->getIdViaje();
+        if($temp = $pasajero->listar($sql)){
+            $colPasajeros = $temp;
+        }
+        return $colPasajeros;
     }
     public function setColPasajeros($newColPasajeros){
         $this->colPasajeros = $newColPasajeros;
@@ -97,14 +103,14 @@ class Viaje{
                 $seEncontro = false;
                 $i = 0;
                 while($i<$cantPasajeros && !$seEncontro){
-                    $dniPasajero = $pasajeros[$i]->getNumDocumento();
+                    $dniPasajero = $pasajeros[$i]->getDocumento();
                     if($dniPasajero == $nuevoDato){
                         $seEncontro = true;
                     }
                     $i++;
                 }
                 if(!$seEncontro){
-                    $pasajeros[$numPasajero]->setNumDocumento($nuevoDato);
+                    $pasajeros[$numPasajero]->setDocumento($nuevoDato);
                 }
                 break;
             case "nombre":
@@ -124,8 +130,8 @@ class Viaje{
         $seEncontro = false;
         $i = 0;
         while($i<$cantPasajeros && !$seEncontro){
-            $dniPasajero = $colPasajeros[$i]->getNumDocumento();
-            $nuevoDni = $nuevoPasajero->getNumDocumento();
+            $dniPasajero = $colPasajeros[$i]->getDocumento();
+            $nuevoDni = $nuevoPasajero->getDocumento();
             if($dniPasajero == $nuevoDni){
                 $seEncontro = true;
             }
