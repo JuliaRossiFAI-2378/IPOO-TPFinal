@@ -46,7 +46,7 @@ class Pasajeros extends Persona{
     public function listar($where = ""){
         $resultadoPasajeros = null;
         $baseDatos = new BDViajes();
-        $sql = "SELECT * FROM pasajeros";
+        $sql = "SELECT * FROM pasajero";
         if($where != ""){
             $sql .= " WHERE ".$where;
         }

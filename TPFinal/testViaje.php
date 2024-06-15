@@ -9,9 +9,9 @@ include_once 'BDViajes.php';
 
 $responsable = new ResponsableV();
 $responsable->cargar("Millie","Parfait",1231231,66642069,5,10);
-if($responsable->ingresar()){
+/**if($responsable->ingresar()){
     echo "\n:))))))))))))))))))YIPPEEEEEEEEEEEE\n\n\n";
-}
+} */
 //$pas1 = new PasajerosEstandares("Juan","Perez",123123,321321,20,65464);
 //$pas2 = new PasajerosEspeciales("Macarena","Lopez",879798,546465,60,12332,true,false,true);
 
@@ -38,7 +38,7 @@ function seleccionarOpcion(){
   echo "[6] Agregar un pasajero.\n";
   echo "[7] Eliminar un pasajero.\n";
   echo "[8] Modificar el dato de un pasajero.\n";
-  echo "[9] Ver la informacion del viaje.\n";
+  echo "[9] Ver la informacion de un viaje.\n";//funcional, por ahora
   echo "[10] Ver los datos de los pasajeros.\n";
   echo "[11] Ver los datos del responsable.\n";
   echo "[12] Modificar los datos del responsable.\n";
@@ -100,9 +100,9 @@ do{
                 echo "Ingrese el numero de telefono del pasajero: ";
                 $telefonoPasajero = trim(fgets(STDIN));
                 echo "Ingrese el id del viaje: ";
-                $idviaje = trim(fgets(STDIN));
+                $idViaje = trim(fgets(STDIN));
                 $nuevoPasajero = new Pasajeros();
-                $nuevoPasajero->cargar($nombrePasajero,$apellidoPasajero,$documentoPasajero,$telefonoPasajero,$numAsiento);
+                $nuevoPasajero->cargar($nombrePasajero,$apellidoPasajero,$documentoPasajero,$telefonoPasajero,$idViaje);
                 if(!$viaje->agregarPasajero($nuevoPasajero)){
                     //$viaje->agregarPasajero($nuevoPasajero); 
                     echo "El pasajero fue agregado exitosamente.";
@@ -161,6 +161,9 @@ do{
             }
             break;
         case 9:
+            echo "Ingrese el id del viaje que desea ver: ";
+            $idViaje = trim(fgets(STDIN));
+            $viaje->buscar($idViaje);
             echo $viaje;
             break;
         case 10: 
