@@ -52,12 +52,12 @@ class ResponsableV extends Persona{
         return $resp;
     }
 
-    public function listar($where = ""){
+    public function listar($condicion = ""){
         $resultadoResponsables = null;
         $baseDatos = new BDViajes();
         $sql = "SELECT * FROM responsable";
-        if($where != ""){
-            $sql .= " WHERE ".$where;
+        if($condicion != ""){
+            $sql .= " WHERE ".$condicion;
         }
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
