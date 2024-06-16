@@ -43,12 +43,15 @@ class ResponsableV extends Persona{
                     $this->setNumEmpleado($result['numeroempleado']);
                     $this->setNumLicencia($result['numerolicencia']);
                     $resp = true;
-                }else
+                }else{
                     $this->setMensajeError($baseDatos->getERROR());
-            }else
+                }
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 
@@ -67,8 +70,9 @@ class ResponsableV extends Persona{
                     $responsable->buscar($tupla['rdocumento']);
                     $resultadoResponsables[] = $responsable;
                 }
-            }else
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
+            }
         }
         return $resultadoResponsables;
     }
@@ -80,12 +84,14 @@ class ResponsableV extends Persona{
             $sql = "INSERT INTO responsable (rdocumento, numeroempleado, numerolicencia) VALUES (".parent::getDocumento().
                     ", ".$this->getNumEmpleado().", ".$this->getNumLicencia().")";
             if($baseDatos->conectarBD()){
-                if($baseDatos->consulta($sql))
+                if($baseDatos->consulta($sql)){
                     $resp = true;
-                else
+                }else{
                     $this->setMensajeError($baseDatos->getERROR());
-            }else
+                }
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
+            }
         }
         return $resp;
     }
@@ -97,14 +103,17 @@ class ResponsableV extends Persona{
             if($baseDatos->conectarBD()){
                 $sql = "UPDATE responsable SET numeroempleado=".$this->getNumEmpleado().", numerolicencia=".
                         $this->getNumLicencia()." WHERE rdocumento=".parent::getDocumento();
-                if($baseDatos->consulta($sql))
+                if($baseDatos->consulta($sql)){
                     $resp = true;
-                else
+                }else{
                     $this->setMensajeError($baseDatos->getERROR());
-            }else
+                }
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 
@@ -114,13 +123,15 @@ class ResponsableV extends Persona{
         if($baseDatos->conectarBD()){
             $sql = "DELETE FROM responsable WHERE rdocumento=".parent::getDocumento();
             if($baseDatos->consulta($sql)){
-                if(parent::eliminar())
+                if(parent::eliminar()){
                     $resp = true;
-            }
-            else
+                }
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 }

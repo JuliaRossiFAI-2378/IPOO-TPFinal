@@ -70,12 +70,15 @@ class Persona{
                     $this->setApellido($result['apellido']);
                     $this->setTelefono($result['telefono']);
                     $resp = true;
-                }else
+                }else{
                     $this->setMensajeError($baseDatos->getERROR());
-            }else
+                }
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 
@@ -129,12 +132,14 @@ class Persona{
         $baseDatos = new BDViajes();
         $sql = "DELETE FROM persona WHERE documento=".$this->getDocumento();
         if($baseDatos->conectarBD()){
-            if($baseDatos->consulta($sql))
+            if($baseDatos->consulta($sql)){
                 $resp = true;
-            else
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 
@@ -146,10 +151,12 @@ class Persona{
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
                 $resp = true;
-            }else  
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 

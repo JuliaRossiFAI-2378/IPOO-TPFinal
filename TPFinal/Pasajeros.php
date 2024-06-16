@@ -34,12 +34,15 @@ class Pasajeros extends Persona{
                     parent::buscar($dni);
                     $this->setIdViaje($result['idviaje']);
                     $resp = true;
-                }else
+                }else{
                     $this->setMensajeError($baseDatos->getERROR());
-            }else
+                }
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 
@@ -58,8 +61,9 @@ class Pasajeros extends Persona{
                     $pasajero->buscar($tupla['pdocumento']);
                     $resultadoPasajeros[] = $pasajero;
                 }
-            }else
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
+            }
         }
         return $resultadoPasajeros;
     }
@@ -70,12 +74,14 @@ class Pasajeros extends Persona{
         if(parent::ingresar()){
             $sql = "INSERT INTO pasajero (pdocumento, idviaje) VALUES (".parent::getDocumento().", ".$this->getIdViaje().")";
             if($baseDatos->conectarBD()){
-                if($baseDatos->consulta($sql))
+                if($baseDatos->consulta($sql)){
                     $resp = true;
-                else
+                }else{
                     $this->setMensajeError($baseDatos->getERROR());
-            }else
+                }
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
+            }
         }
         return $resp;
     }
@@ -86,14 +92,17 @@ class Pasajeros extends Persona{
         if(parent::modificar()){
             if($baseDatos->conectarBD()){
                 $sql = "UPDATE pasajero SET idviaje=".$this->getIdViaje()." WHERE pdocumento=".parent::getDocumento();
-                if($baseDatos->consulta($sql))
+                if($baseDatos->consulta($sql)){
                     $resp = true;
-                else
+                }else{
                     $this->setMensajeError($baseDatos->getERROR());
-            }else
+                }
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 
@@ -103,13 +112,15 @@ class Pasajeros extends Persona{
         if($baseDatos->conectarBD()){
             $sql = "DELETE FROM pasajero WHERE pdocumento=".parent::getDocumento();
             if($baseDatos->consulta($sql)){
-                if(parent::eliminar())
+                if(parent::eliminar()){
                     $resp = true;
-            }
-            else
+                }
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 }

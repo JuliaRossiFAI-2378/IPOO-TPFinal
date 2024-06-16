@@ -229,12 +229,15 @@ class Viaje{
                     $this->setNumEmpleado(['rnumeroempleado']);
                     $this->setCostoViaje($result['importe']);
                     $resp = true;
-                }else  
+                }else{
                     $this->setMensajeError($baseDatos->getERROR());
-            }else
+                }
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 
@@ -259,10 +262,12 @@ class Viaje{
                     //falta ver como manejar el tema de la colPasajeros y la sumaCostos 
                     $resultados[] = $viaje;
                 }
-            }else
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resultados;
     }
 
@@ -271,12 +276,14 @@ class Viaje{
         $resp = false;
         $sql = "DELETE FROM viaje WHERE idviaje=".$this->getIdViaje();
         if($baseDatos->conectarBD()){
-            if($baseDatos->consulta($sql))
+            if($baseDatos->consulta($sql)){
                 $resp = true;
-            else
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 
@@ -288,10 +295,12 @@ class Viaje{
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
                 $resp = true;
-            }else  
+            }else{
                 $this->setMensajeError($baseDatos->getERROR());
-        }else
+            }
+        }else{
             $this->setMensajeError($baseDatos->getERROR());
+        }
         return $resp;
     }
 }

@@ -117,8 +117,9 @@ do{
                 }else{
                     echo "\nNo se pueden agregar mas pasajeros, el viaje ya alcanzo su capacidad maxima.\n";
                 }
-            }else
-                echo "Ese id no corresponde a ningun viaje";           
+            }else{
+                echo "Ese id no corresponde a ningun viaje";  
+            }         
             break;
         case 7:
             echo "Ingrese el id del viaje en el que desea eliminar un pasajero: ";
@@ -126,7 +127,7 @@ do{
             if($viaje->buscar($idViaje)){
                 $pasajeros = $viaje->getColPasajeros();
                 $cantPasajeros = count($pasajeros);
-                if ($cantPasajeros == 0){
+                if($cantPasajeros == 0){
                     echo "\nNo hay pasajeros para eliminar.\n";
                 }else{
                     //Muestra los pasajeros asi el usuario sabe que numero de pasajero elegir
@@ -139,8 +140,9 @@ do{
                     $numeroDePasajero = solicitarNumeroEntre(1,$cantPasajeros);
                     $viaje->eliminarPasajero($numeroDePasajero-1);
                 }
-            }else
-                echo "Ese id no corresponde a ningun viaje";             
+            }else{
+                echo "Ese id no corresponde a ningun viaje";
+            }          
             break;
         case 8:
             echo "Ingrese el id del viaje en el que se encuentra ese pasajero: ";
@@ -173,21 +175,24 @@ do{
                     }
                     echo "Ingrese el nuevo dato: ";
                     $nuevoDato = trim(fgets(STDIN));
-                    if(!$viaje->modificarDatosPasajero($numeroDePasajero-1,$datoPasajero,$nuevoDato))
+                    if(!$viaje->modificarDatosPasajero($numeroDePasajero-1,$datoPasajero,$nuevoDato)){
                         echo "\nDato modificado con exito.\n";
-                    else
+                    }else{
                         echo "\nYa existe un pasajero con ese dni en este u otro viaje.\n";
+                    }
                 }
-            }else
+            }else{
                 echo "Ese id no corresponde a ningun viaje";
+            }
             break;
         case 10:
             echo "Ingrese el id del viaje que desea ver: ";
             $idViaje = trim(fgets(STDIN));
-            if($viaje->buscar($idViaje))
+            if($viaje->buscar($idViaje)){
                 echo $viaje;
-            else
+            }else{
                 echo "No hay un viaje con ese id en la base de datos.\n";
+            }
             break;
         case 11: 
             echo "Ingrese el id del viaje que desea ver: ";
