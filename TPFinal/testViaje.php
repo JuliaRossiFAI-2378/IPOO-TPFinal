@@ -40,7 +40,7 @@ function seleccionarOpcion(){
     echo "[8] Modificar el dato de un pasajero.\n";//funcionando por el momento
     echo "[9] Modificar los datos del responsable.\n";
     echo "[10] Ver la informacion de un viaje.\n";//funcional, por ahora
-    echo "[11] Ver los datos de los pasajeros.\n";
+    echo "[11] Ver los datos de los pasajeros.\n";//funcionando por el momento
     echo "[12] Ver los datos del responsable.\n";
     echo "[13] Salir.\n";
     echo "Ingrese la opcion del menu que desea elegir: ";
@@ -190,14 +190,20 @@ do{
                 echo "No hay un viaje con ese id en la base de datos.\n";
             break;
         case 11: 
-            $pasajeros = $viaje->getColPasajeros();
-            $cantPasajeros = count($pasajeros);
-            if($cantPasajeros > 0){
-                for($i=0; $i<$cantPasajeros; $i++){
-                    echo "\n\tPasajero ".$i+1 .$pasajeros[$i];
+            echo "Ingrese el id del viaje que desea ver: ";
+            $idViaje = trim(fgets(STDIN));
+            if($viaje->buscar($idViaje)){
+                $pasajeros = $viaje->getColPasajeros();
+                $cantPasajeros = count($pasajeros);
+                if($cantPasajeros > 0){
+                    for($i=0; $i<$cantPasajeros; $i++){
+                        echo "\n\tPasajero ".$i+1 .$pasajeros[$i];
+                    }
+                }else{
+                    echo "\nNo hay pasajeros asignados a este viaje.";
                 }
             }else{
-                echo "No hay pasajeros asignados a este viaje.";
+                echo "\nNo hay un viaje con ese id en la base de datos.\n";
             }
             break;
         case 12:
