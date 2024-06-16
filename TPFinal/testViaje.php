@@ -170,8 +170,10 @@ do{
         case 9:
             echo "Ingrese el id del viaje que desea ver: ";
             $idViaje = trim(fgets(STDIN));
-            $viaje->buscar($idViaje);
-            echo $viaje;
+            if($viaje->buscar($idViaje))
+                echo $viaje;
+            else
+                echo "No hay un viaje con ese id en la base de datos.\n";
             break;
         case 10: 
             $pasajeros = $viaje->getColPasajeros();
