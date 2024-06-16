@@ -73,6 +73,14 @@ class Viaje{
     public function setMensajeError($newMensajeError){
         $this->mensajeError = $newMensajeError;
     }
+    public function getALLPasajeros(){
+        $colPasajeros = [];
+        $pasajero = new Pasajeros();
+        if($temp = $pasajero->listar()){
+            $colPasajeros = $temp;
+        }
+        return $colPasajeros;
+    }
     public function __toString()
     {
         $cad = "\nIdViaje: ".$this->getIdViaje()."\nDestino: ".$this->getDestino()."\nCantidad maxima de pasajeros: ".
@@ -96,11 +104,11 @@ class Viaje{
         $this->sumaCostos = $sumaCostos;
     }
     public function modificarDatosPasajero($numPasajero,$datoPasajero,$nuevoDato){
-        $pasajeros = $this->getColPasajeros();
+        $pasajeros = $this->getALLPasajeros();
+        $seEncontro = false;
         switch($datoPasajero){
             case "dni":
                 $cantPasajeros = count($pasajeros);
-                $seEncontro = false;
                 $i = 0;
                 while($i<$cantPasajeros && !$seEncontro){
                     $dniPasajero = $pasajeros[$i]->getDocumento();
@@ -110,18 +118,23 @@ class Viaje{
                 }
                 if(!$seEncontro){
                     $pasajeros[$numPasajero]->setDocumento($nuevoDato);
+                    $pasajeros[$numPasajero]->modificar();
                 }
                 break;
             case "nombre":
                 $pasajeros[$numPasajero]->setNombre($nuevoDato);
+                $pasajeros[$numPasajero]->modificar();
                 break;
             case "apellido":
                 $pasajeros[$numPasajero]->setApellido($nuevoDato);
+                $pasajeros[$numPasajero]->modificar();
                 break;
             case "telefono":
                 $pasajeros[$numPasajero]->setTelefono($nuevoDato);
+                $pasajeros[$numPasajero]->modificar();
                 break;
         }
+        return $seEncontro;
     }
     public function agregarPasajero($nuevoPasajero){
         $colPasajeros = $this->getColPasajeros();
