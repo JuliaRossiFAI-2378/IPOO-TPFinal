@@ -31,7 +31,7 @@ function solicitarNumeroEntre($minimo,$maximo){
  */
 function seleccionarOpcion(){
   echo "\n[1] Cargar informacion del viaje.\n";
-  //echo "[2] Modificar id del viaje.\n"; es auto increment :)
+  echo "[2] Modificar id del viaje.\n"; //es auto increment :), ya se pero se pueden editar igual
   echo "[3] Modificar destino del viaje.\n";
   echo "[4] Modificar cantidad maxima de pasajeros.\n";
   echo "[5] Modificar el costo del viaje\n";
@@ -66,8 +66,9 @@ do{
             break;
         case 2:
             echo "Ingrese el nuevo id del viaje: ";
-            $nuevoIdViajeViaje = trim(fgets(STDIN));
-            $viaje->setIdViaje($nuevoIdViajeViaje);
+            $nuevoIdViaje = trim(fgets(STDIN));
+            $viaje->setIdViaje($nuevoIdViaje);
+            $viaje->modificar();
             break;
         case 3:
             echo "Ingrese el nuevo destino de viaje: ";
