@@ -30,28 +30,28 @@ function solicitarNumeroEntre($minimo,$maximo){
  * @return INT
  */
 function seleccionarOpcion(){
-  echo "\n[1] Cargar informacion del viaje.\n";
-  echo "[2] Modificar id del viaje.\n"; //es auto increment :), ya se pero se pueden editar igual
-  echo "[3] Modificar destino del viaje.\n";
-  echo "[4] Modificar cantidad maxima de pasajeros.\n";
-  echo "[5] Modificar el costo del viaje\n";
-  echo "[6] Agregar un pasajero.\n";//funcionando por el momento
-  echo "[7] Eliminar un pasajero.\n";//funcionando por el momento
-  echo "[8] Modificar el dato de un pasajero.\n";
-  echo "[9] Ver la informacion de un viaje.\n";//funcional, por ahora
-  echo "[10] Ver los datos de los pasajeros.\n";
-  echo "[11] Ver los datos del responsable.\n";
-  echo "[12] Modificar los datos del responsable.\n";
-  echo "[13] Salir.\n";
-  echo "Ingrese la opcion del menu que desea elegir: ";
-  //Verifica que el numero elegido vaya unicamente entre las opciones del menu
-  $opcionMenu = solicitarNumeroEntre(1,13);
-  return $opcionMenu;
+    echo "\n[1] Cargar informacion del viaje.\n";
+    echo "[2] Modificar id del viaje.\n"; //es auto increment :), ya se pero se pueden editar igual
+    echo "[3] Modificar destino del viaje.\n";
+    echo "[4] Modificar cantidad maxima de pasajeros.\n";
+    echo "[5] Modificar el costo del viaje\n";
+    echo "[6] Agregar un pasajero.\n";//funcionando por el momento
+    echo "[7] Eliminar un pasajero.\n";//funcionando por el momento
+    echo "[8] Modificar el dato de un pasajero.\n";
+    echo "[9] Ver la informacion de un viaje.\n";//funcional, por ahora
+    echo "[10] Ver los datos de los pasajeros.\n";
+    echo "[11] Ver los datos del responsable.\n";
+    echo "[12] Modificar los datos del responsable.\n";
+    echo "[13] Salir.\n";
+    echo "Ingrese la opcion del menu que desea elegir: ";
+    //Verifica que el numero elegido vaya unicamente entre las opciones del menu
+    $opcionMenu = solicitarNumeroEntre(1,13);
+    return $opcionMenu;
 }
 do{
-  //Muestra el menu y devuelve la opcion elegida para utilizar en el switch
-  $opcion = seleccionarOpcion();
-  switch($opcion){
+    //Muestra el menu y devuelve la opcion elegida para utilizar en el switch
+    $opcion = seleccionarOpcion();
+    switch($opcion){
         case 1:
             echo "Ingrese el destino del viaje: ";
             $destViaje = trim(fgets(STDIN));
