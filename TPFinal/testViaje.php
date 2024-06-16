@@ -80,6 +80,7 @@ do{
             echo "Ingrese la nueva cantidad maxima de pasajeros: ";
             $nuevaCantMaxPasajeros = trim(fgets(STDIN));
             $viaje->setCantMaxPasajeros($nuevaCantMaxPasajeros);
+            $viaje->modificar();
             break;
         case 5:
             echo "Ingrese el nuevo costo del viaje: ";
@@ -89,6 +90,7 @@ do{
                 $costoViaje = trim(fgets(STDIN));
             }
             $viaje->setCostoViaje($costoViaje);
+            $viaje->modificar();
             break;
         case 6: 
             if($viaje->hayPasajesDisponibles()){
