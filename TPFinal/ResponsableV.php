@@ -6,8 +6,8 @@ class ResponsableV extends Persona{
     public function __construct()
     {
         parent::__construct();
-        $this->numEmpleado = "";
-        $this->numLicencia = "";
+        $this->numEmpleado = 0;
+        $this->numLicencia = 0;
     }
     public function getNumEmpleado(){
         return $this->numEmpleado;
@@ -32,15 +32,15 @@ class ResponsableV extends Persona{
         $this->numLicencia = $numLicencia;
     }
 
-    public function buscar($dni){
+    public function buscar($numEmpleado){
         $baseDatos = new BDViajes();
         $resp = false;
-        $query = "SELECT * FROM responsable WHERE rdocumento=".$dni;
+        $query = "SELECT * FROM responsable WHERE numeroempleado=".$numEmpleado;
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($query)){
                 if(($result = $baseDatos->registro()) != null){
-                    parent::buscar($dni);
-                    $this->setNumEmpleado($result['numeroempleado']);
+                    parent::buscar($result['rdocumento']);
+                    $this->setNumEmpleado($numEmpleado);
                     $this->setNumLicencia($result['numerolicencia']);
                     $resp = true;
                 }else{
