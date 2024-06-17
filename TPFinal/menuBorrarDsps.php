@@ -24,6 +24,14 @@ function verIDsEmpresas(){
     }
     echo "\n";
 }
+function verIDsViajes(){
+    $viaje = new Viaje();
+    $idViaje = $viaje->listar();
+    foreach($idViaje as $id){
+        echo "\nId del viaje: ".$id->getIdViaje();
+    }
+    echo "\n";
+}
 function seleccionarOpcion(){
     //deberiamos mostrar las empresas/viajes que se pueden elegir para editar/eliminar/visualizar, maniana veo como
     echo "\n[1] Ingresar un empresa.\n";//funcional, falta hacer a prueba de fallos
@@ -79,7 +87,7 @@ switch($opcion){
         $idEmpresa = trim(fgets(STDIN));
         if($empresa->buscar($idEmpresa)){           
             do{
-                echo "[1]Modificar el id de la empresa.\n";
+                echo "\n[1]Modificar el id de la empresa.\n";
                 echo "[2]Modificar el nombre de la empresa.\n";
                 echo "[3]Modificar la direccion de la empresa.\n";
                 echo "[4]Volver al menu anterior.\n";
@@ -143,7 +151,8 @@ switch($opcion){
         $viaje->ingresar();
         break;
     case 6://visualizar datos viaje
-        echo "Ingrese el id del viaje que desea ver: ";
+        verIDsViajes();
+        echo "\nIngrese el id del viaje que desea ver: ";
             $idViaje = trim(fgets(STDIN));
             if($viaje->buscar($idViaje)){
                 echo $viaje;
@@ -152,10 +161,11 @@ switch($opcion){
             }
         break;
     case 7://editar datos viaje__>
-        echo "Ingrese el id del viaje que desea editar: ";
+        verIDsViajes();
+        echo "\nIngrese el id del viaje que desea editar: ";
         $idViaje = trim(fgets(STDIN));
         if($viaje->buscar($idviaje)){
-            echo "[1]Modificar el id del viaje.\n";
+            echo "\n[1]Modificar el id del viaje.\n";
             echo "[2]Modificar el destino del viaje.\n";
             echo "[3]Modificar la cantidad maxima de pasajeros en el viaje.\n";
             echo "[4]Editar los datos de un pasajero.\n";
@@ -284,7 +294,8 @@ switch($opcion){
         }
         break;
     case 8://eliminar un viaje
-        echo "Ingrese el id del viaje que desea eliminar: ";
+        verIDsViajes();
+        echo "\nIngrese el id del viaje que desea eliminar: ";
         $idViaje = trim(fgets(STDIN));
         if($viaje->buscar($idViaje)){
             $viaje->eliminar();
