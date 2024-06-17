@@ -31,7 +31,7 @@ CREATE TABLE viaje(
     rnumeroempleado bigint,
     importe float,
     PRIMARY KEY (idviaje),
-    FOREIGN KEY (idempresa) REFERENCES empresa (idempresa),
+    FOREIGN KEY (idempresa) REFERENCES empresa (idempresa) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (rnumeroempleado) REFERENCES responsable (numeroempleado) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT = 1;
 	
