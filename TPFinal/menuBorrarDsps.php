@@ -23,8 +23,15 @@ do{
 switch($opcion){
     case 1://ingresar una empresa
         //pedimos datos
+        echo "Ingrese el nombre de la empresa: ";
+        $nombreEmpresa = trim(fgets(STDIN));
+        echo "Ingrese la direccion de la empresa: ";
+        $direccionEmpresa = trim(fgets(STDIN));
+        $empresa = new Empresa();
         //empresa.cargar
+        $empresa->cargar(null,$nombreEmpresa,$direccionEmpresa);
         //empresa.ingresar
+        $empresa->ingresar();
         break;
     case 2://visualizar datos empresa
         echo "Ingrese el id de la empresa que desea ver: ";
@@ -38,11 +45,14 @@ switch($opcion){
     case 3://editar datos empresa__>
         echo "Ingrese el id de la empresa que desea editar: ";
         $idEmpresa = trim(fgets(STDIN));
-        if($empresa->buscar($idEmpresa)){
-            echo "que datos queres editar";
-            $opcion = solicitarNumeroEntre(1,4);
+        if($empresa->buscar($idEmpresa)){           
             do{
-                switch($opcion){
+                echo "[1]Modificar el id de la empresa.\n";
+                echo "[2]Modificar el nombre de la empresa.\n";
+                echo "[3]Modificar la direccion de la empresa.\n";
+                echo "[4]Volver al menu anterior.\n";
+                $opcionMenuEmpresa = solicitarNumeroEntre(1,4);
+                switch($opcionMenuEmpresa){
                     case 1://editar id empresa
                         echo "Ingrese el nuevo id de empresa: ";
                         $nuevoIdEmpresa = trim(fgets(STDIN));
