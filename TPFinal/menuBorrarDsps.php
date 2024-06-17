@@ -203,129 +203,133 @@ switch($opcion){
         verIDsViajes();
         echo "\nIngrese el id del viaje que desea editar: ";
         $idViaje = trim(fgets(STDIN));
-        if($viaje->buscar($idViaje)){
-            do{
-                echo "\n[1]Modificar el id del viaje.\n";
-                echo "[2]Modificar el destino del viaje.\n";
-                echo "[3]Modificar la cantidad maxima de pasajeros en el viaje.\n";
-                echo "[4]Editar los datos de un pasajero.\n";
-                echo "[5]Editar los datos de un empleado responsable por el viaje.\n";
-                echo "[6]Modificar el costo del viaje.\n";
-                echo "[7]Volver al menu anterior.\n";
-                echo "Ingrese la opcion del menu que desea elegir: ";
-                $opcionMenuViajes = solicitarNumeroEntre(1,7);
-                switch($opcionMenuViajes){
-                    case 1://editar id viaje
-                        echo "Ingrese el nuevo ID de viaje: ";
-                        $nuevoIdViaje = trim(fgets(STDIN));
-                        $viaje->setIdViaje($nuevoIdViaje);
-                        if (($viaje->listar("idviaje=" . $viaje->getIdEmpresa()))){
-                            $viaje->modificar();
-                        }else{
-                            echo "Ya existe un viaje con ese ID";
-                        }
-                        break;
-                    case 2://editar destino
-                        echo "Ingrese el nuevo destino: ";
-                        $nuevoDestino = trim(fgets(STDIN));
-                        $viaje->setDestino($nuevoDestino);
-                        $viaje->modificar();
-                        echo "\nModificacion realizada con exito.";
-                        break;
-                    case 3://editar cantidad maxima de pasajeros
-                        echo "Ingrese nueva cantidad maxima de pasajeros: ";
-                        $nuevoCantMaxPasajeros = trim(fgets(STDIN));
-                        $viaje->setCantMaxPasajeros($nuevoCantMaxPasajeros);
-                        $viaje->modificar();
-                        echo "\nModificacion realizada con exito.";
-                        break;
-                    case 4://editar datos de un pasajero
-                        $pasajeros = $viaje->getColPasajeros();
-                        //Verifica que haya pasajeros para modificar
-                        if (count($pasajeros) != 0){
-                            //Imprime los pasajeros para que el usuario sepa que numero seleccionar
-                            for($i=0; $i<$cantPasajeros; $i++){
-                                echo "\nPasajero numero: ".$i+1;
-                                echo $pasajeros[$i];
+        if($idViaje != null){
+            if($viaje->buscar($idViaje)){
+                do{
+                    echo "\n[1]Modificar el id del viaje.\n";
+                    echo "[2]Modificar el destino del viaje.\n";
+                    echo "[3]Modificar la cantidad maxima de pasajeros en el viaje.\n";
+                    echo "[4]Editar los datos de un pasajero.\n";
+                    echo "[5]Editar los datos de un empleado responsable por el viaje.\n";
+                    echo "[6]Modificar el costo del viaje.\n";
+                    echo "[7]Volver al menu anterior.\n";
+                    echo "Ingrese la opcion del menu que desea elegir: ";
+                    $opcionMenuViajes = solicitarNumeroEntre(1,7);
+                    switch($opcionMenuViajes){
+                        case 1://editar id viaje
+                            echo "Ingrese el nuevo ID de viaje: ";
+                            $nuevoIdViaje = trim(fgets(STDIN));
+                            $viaje->setIdViaje($nuevoIdViaje);
+                            if (($viaje->listar("idviaje=" . $viaje->getIdEmpresa()))){
+                                $viaje->modificar();
+                            }else{
+                                echo "Ya existe un viaje con ese ID";
                             }
-                            echo "\nIngrese el numero del pasajero desea modificar: ";
-                            //Solicita un numero que no sobrepase la cantidad de pasajeros
-                            $numeroDePasajero = solicitarNumeroEntre(1,$cantPasajeros);
-                            
-                            do{//no sabemos si vamso a tener la coleccion o no, asique depende la implementacion
-                                echo "[1]Modificar el nombre del pasajero.\n";
-                                echo "[2]Modificar el apellido del pasajero.\n";
-                                echo "[3]Modificar el telefono del pasajero.\n";
-                                echo "[4]Modificar el documento del pasajero.\n";
-                                echo "[5]Volver al menu anterior.\n";
-                                $opcionMenuPasajeros = solicitarNumeroEntre(1,5);
-                                switch($opcionMenuPasajeros){
-                                    case 1://modificar nombre pasajero
-                                        break;
-                                    case 2://modificar apellido pasajero
-                                        break;
-                                    case 3://modificaar telefono pasajero
-                                        break;
-                                    case 4://modificar dni pasajero
-                                        break;
-                                    case 5://volver atras
-                                        break;
+                            break;
+                        case 2://editar destino
+                            echo "Ingrese el nuevo destino: ";
+                            $nuevoDestino = trim(fgets(STDIN));
+                            $viaje->setDestino($nuevoDestino);
+                            $viaje->modificar();
+                            echo "\nModificacion realizada con exito.";
+                            break;
+                        case 3://editar cantidad maxima de pasajeros
+                            echo "Ingrese nueva cantidad maxima de pasajeros: ";
+                            $nuevoCantMaxPasajeros = trim(fgets(STDIN));
+                            $viaje->setCantMaxPasajeros($nuevoCantMaxPasajeros);
+                            $viaje->modificar();
+                            echo "\nModificacion realizada con exito.";
+                            break;
+                        case 4://editar datos de un pasajero
+                            $pasajeros = $viaje->getColPasajeros();
+                            //Verifica que haya pasajeros para modificar
+                            if (count($pasajeros) != 0){
+                                //Imprime los pasajeros para que el usuario sepa que numero seleccionar
+                                for($i=0; $i<$cantPasajeros; $i++){
+                                    echo "\nPasajero numero: ".$i+1;
+                                    echo $pasajeros[$i];
                                 }
-                            }while($opcionMenuPasajeros!=5);
-                            
-                        }else{
-                            echo "No hay pasajeros registrados.\n";
-                        }
-                        break;
-                    case 5://editar datos de empleado responsable
-                        //aca tenemos que buscar empleado segun el id de empleado
-                        //la cosa es, EN DONDE? o tenemos una coleccion,o hacemos un query
-                        echo "ingrese id de empleado a editar";
-                        $idEmpleado = trim(fgets(STDIN));
-                        if(0){// !buscarEmpleado($idEmpleado)
-                            echo "no existe empleado con ese id";
-                        }else{
-                            do{
-                                echo "[1]Modificar el numero empleado del responsable del viaje.\n";
-                                echo "[2]Modificar el nombre del empleado responsable del viaje.\n";
-                                echo "[3]Modificar el apellido del empleado responsable del viaje.\n";
-                                echo "[4]Modificar el telefono del empleado responsable del viaje.\n";
-                                echo "[5]Modificar el documento del empleado responsable del viaje.\n";
-                                echo "[6]Modificar el numero de licencia del empleado responsable del viaje.\n";
-                                echo "[7]Volver al menu anterior.\n";
-                                echo "Ingrese la opcion del menu que desea elegir: ";
-                                $opcionMenuResponsable = solicitarNumeroEntre(1,7);
-                                switch($opcionMenuResponsable){//misma situacion que editar empleado
-                                    case 1://modificar numero empleado
-                                        break;
-                                    case 2://modificar nombre empleado
-                                        break;
-                                    case 3://modificar apellido empleado
-                                        break;
-                                    case 4://modificar telefono empleado
-                                        break;
-                                    case 5://modificar documento empleado
-                                        break;
-                                    case 6://modificar numero licencia empleado
-                                        break;
-                                    case 7://volver atras
-                                        break;
-                                }
-                            }while($opcionMenuResponsable!=7);
-                        }
-                        break;
-                    case 6://editar importe
-                        echo "Ingrese nuevo importe: ";
-                        $nuevoCostoViaje = trim(fgets(STDIN));
-                        $viaje->setCostoViaje($nuevoCostoViaje);
-                        $viaje->modificar();
-                        break;
-                    case 7://volver atras
-                        break;
-                }
-            }while($opcionMenuViajes != 7);
+                                echo "\nIngrese el numero del pasajero desea modificar: ";
+                                //Solicita un numero que no sobrepase la cantidad de pasajeros
+                                $numeroDePasajero = solicitarNumeroEntre(1,$cantPasajeros);
+                                
+                                do{//no sabemos si vamso a tener la coleccion o no, asique depende la implementacion
+                                    echo "[1]Modificar el nombre del pasajero.\n";
+                                    echo "[2]Modificar el apellido del pasajero.\n";
+                                    echo "[3]Modificar el telefono del pasajero.\n";
+                                    echo "[4]Modificar el documento del pasajero.\n";
+                                    echo "[5]Volver al menu anterior.\n";
+                                    $opcionMenuPasajeros = solicitarNumeroEntre(1,5);
+                                    switch($opcionMenuPasajeros){
+                                        case 1://modificar nombre pasajero
+                                            break;
+                                        case 2://modificar apellido pasajero
+                                            break;
+                                        case 3://modificaar telefono pasajero
+                                            break;
+                                        case 4://modificar dni pasajero
+                                            break;
+                                        case 5://volver atras
+                                            break;
+                                    }
+                                }while($opcionMenuPasajeros!=5);
+                                
+                            }else{
+                                echo "No hay pasajeros registrados.\n";
+                            }
+                            break;
+                        case 5://editar datos de empleado responsable
+                            //aca tenemos que buscar empleado segun el id de empleado
+                            //la cosa es, EN DONDE? o tenemos una coleccion,o hacemos un query
+                            echo "ingrese id de empleado a editar";
+                            $idEmpleado = trim(fgets(STDIN));
+                            if(0){// !buscarEmpleado($idEmpleado)
+                                echo "no existe empleado con ese id";
+                            }else{
+                                do{
+                                    echo "[1]Modificar el numero empleado del responsable del viaje.\n";
+                                    echo "[2]Modificar el nombre del empleado responsable del viaje.\n";
+                                    echo "[3]Modificar el apellido del empleado responsable del viaje.\n";
+                                    echo "[4]Modificar el telefono del empleado responsable del viaje.\n";
+                                    echo "[5]Modificar el documento del empleado responsable del viaje.\n";
+                                    echo "[6]Modificar el numero de licencia del empleado responsable del viaje.\n";
+                                    echo "[7]Volver al menu anterior.\n";
+                                    echo "Ingrese la opcion del menu que desea elegir: ";
+                                    $opcionMenuResponsable = solicitarNumeroEntre(1,7);
+                                    switch($opcionMenuResponsable){//misma situacion que editar empleado
+                                        case 1://modificar numero empleado
+                                            break;
+                                        case 2://modificar nombre empleado
+                                            break;
+                                        case 3://modificar apellido empleado
+                                            break;
+                                        case 4://modificar telefono empleado
+                                            break;
+                                        case 5://modificar documento empleado
+                                            break;
+                                        case 6://modificar numero licencia empleado
+                                            break;
+                                        case 7://volver atras
+                                            break;
+                                    }
+                                }while($opcionMenuResponsable!=7);
+                            }
+                            break;
+                        case 6://editar importe
+                            echo "Ingrese nuevo importe: ";
+                            $nuevoCostoViaje = trim(fgets(STDIN));
+                            $viaje->setCostoViaje($nuevoCostoViaje);
+                            $viaje->modificar();
+                            break;
+                        case 7://volver atras
+                            break;
+                    }
+                }while($opcionMenuViajes != 7);
+            }else{
+                echo "\nNo hay una viaje con ese id en la base de datos.\n";
+            }
         }else{
-            echo "\nNo hay una viaje con ese id en la base de datos.\n";
+            echo "\nNo ingreso ningun ID, se regresara al menu anterior.";
         }
         break;
     case 8://eliminar un viaje
