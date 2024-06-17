@@ -220,8 +220,7 @@ switch($opcion){
             echo "[4]Editar los datos de un pasajero.\n";
             echo "[5]Editar los datos de un empleado responsable por el viaje.\n";
             echo "[6]Modificar el costo del viaje.\n";
-            echo "[7]Editar coleccion de pasajeros del viaje???????????????????????????.\n";
-            echo "[8]Volver al menu anterior.\n";
+            echo "[7]Volver al menu anterior.\n";
             $opcion = solicitarNumeroEntre(1,7);
             do{
                 switch($opcion){
@@ -229,7 +228,7 @@ switch($opcion){
                         echo "Ingrese el nuevo ID de viaje: ";
                         $nuevoIdViaje = trim(fgets(STDIN));
                         $viaje->setIdViaje($nuevoIdViaje);
-                        if (($viaje->listar(" idViaje = " . $viaje->getIdEmpresa())) != null){
+                        if (($viaje->listar("idviaje=" . $viaje->getIdEmpresa()))){
                             $viaje->modificar();
                         }else{
                             echo "Ya existe un viaje con ese ID";
@@ -328,16 +327,10 @@ switch($opcion){
                         $viaje->setCostoViaje($nuevoCostoViaje);
                         $viaje->modificar();
                         break;
-                    case 7://editar coleccion pasajeros //****no sabemos si este atributo se queda
-                        //si ponemos esto, seria agregar pasajeros uno por uno con un for/while
-                        $nuevoColPasajeros = [];
-                        $viaje->setColPasajeros($nuevoColPasajeros);
-                        $viaje->modificar();
-                        break;
-                    case 8://volver atras
+                    case 7://volver atras
                         break;
                 }
-            }while($opcion != 8);
+            }while($opcion != 7);
         }else{
             echo "\nNo hay una viaje con ese id en la base de datos.\n";
         }
