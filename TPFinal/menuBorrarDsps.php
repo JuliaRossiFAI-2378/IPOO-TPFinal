@@ -29,18 +29,16 @@ switch($opcion){
     case 2://visualizar datos empresa
         echo "Ingrese el id de la empresa que desea ver: ";
         $idEmpresa = trim(fgets(STDIN));
-        if(!($empresa->buscar($idEmpresa))){
-            echo "No hay una empresa con ese id en la base de datos.\n";
-        }else{
+        if($empresa->buscar($idEmpresa)){
             echo $empresa;
+        }else{
+            echo "No hay una empresa con ese id en la base de datos.\n";
         }
         break;
     case 3://editar datos empresa__>
         echo "Ingrese el id de la empresa que desea editar: ";
         $idEmpresa = trim(fgets(STDIN));
-        if(!($empresa->buscar($idEmpresa))){
-            echo "No hay una empresa con ese id en la base de datos.\n";
-        }else{
+        if($empresa->buscar($idEmpresa)){
             echo "que datos queres editar";
             $opcion = solicitarNumeroEntre(1,4);
             do{
@@ -66,18 +64,20 @@ switch($opcion){
                     case 4://volver atras
                         break;
                 }
-            }while($opcion!=4);     
+            }while($opcion!=4);
+        }else{
+            echo "No hay una empresa con ese id en la base de datos.\n";     
         }
         break;
     case 4://eliminar empresa
         echo "Ingrese el id de la empresa que desea eliminar: ";
         $idEmpresa = trim(fgets(STDIN));
-        if(!($empresa->buscar($idEmpresa))){
-            echo "No hay una empresa con ese id en la base de datos.\n";
-        }else{
+        if($empresa->buscar($idEmpresa)){
             $empresa->eliminar();
             //aca se puede hacer un checkeo de dependencias
             //tipo, "esto romperia un viaje, desea continuar?"
+        }else{
+            echo "No hay una empresa con ese id en la base de datos.\n";
         }
         break;
     case 5://ingresar viaje
@@ -85,38 +85,28 @@ switch($opcion){
         $destViaje = trim(fgets(STDIN));
         echo "Ingrese la cantidad maxima de pasajeros: ";
         $cantidadMaximaPasajeros = trim(fgets(STDIN));
+        echo "Ingrese el id de la empresa: ";
+        $idEmpresa = trim(fgets(STDIN));
         echo "Ingrese el costo del viaje: ";
         $costoViaje = trim(fgets(STDIN));
         echo "Ingrese el numero de empleado del responsable: ";
         $numeroEmpleado = trim(fgets(STDIN));
-        $viaje->cargar(null,$destViaje,$cantidadMaximaPasajeros,[],$numeroEmpleado, $costoViaje, 0);
+        $viaje->cargar(null,$destViaje,$cantidadMaximaPasajeros,$idEmpresa,[],$numeroEmpleado, $costoViaje, 0);
         $viaje->ingresar();
         break;
     case 6://visualizar datos viaje
         echo "Ingrese el id del viaje que desea ver: ";
-        $idViaje = trim(fgets(STDIN));
-        if(!($viaje->buscar($idViaje))){
-            echo "No hay un viaje con ese id en la base de datos.\n";
-        }else{
-            echo $viaje->getIdViaje();
-            echo $viaje->getDestino();
-            echo $viaje->getCantMaxPasajeros();
-            //coleccion pasajeros****no sabemos si este atributo se queda
-            /*
-            foreach($viaje->getColPasajeros() as $pasajero){
-                echo $pasajero . "\n";
+            $idViaje = trim(fgets(STDIN));
+            if($viaje->buscar($idViaje)){
+                echo $viaje;
+            }else{
+                echo "No hay un viaje con ese id en la base de datos.\n";
             }
-            */
-            echo $viaje->getNumEmpleado();
-            echo $viaje->getCostoViaje();
-        }
         break;
     case 7://editar datos viaje__>
         echo "Ingrese el id del viaje que desea editar: ";
         $idViaje = trim(fgets(STDIN));
-        if(!($viaje->buscar($idviaje))){
-            echo "No hay una viaje con ese id en la base de datos.\n";
-        }else{
+        if($viaje->buscar($idviaje)){
             echo "que datos queres editar";
             $opcion = solicitarNumeroEntre(1,7);
             do{
@@ -220,17 +210,19 @@ switch($opcion){
                         break;
                 }
             }while($opcion != 8);
+        }else{
+            echo "No hay una viaje con ese id en la base de datos.\n";
         }
         break;
     case 8://eliminar un viaje
         echo "Ingrese el id del viaje que desea eliminar: ";
         $idViaje = trim(fgets(STDIN));
-        if(!($viaje->buscar($idViaje))){
-            echo "No hay un viaje con ese id en la base de datos.\n";
-        }else{
+        if($viaje->buscar($idViaje)){
             $viaje->eliminar();
             //aca se puede hacer un checkeo de dependencias
             //tipo, "esto romperia un viaje, desea continuar?"
+        }else{
+            echo "No hay un viaje con ese id en la base de datos.\n";
         }
         break;
     case 9://mostrar todos los viajes
