@@ -55,10 +55,15 @@ switch($opcion){
         $empresa->ingresar();
         break;
     case 2://visualizar datos empresa
+        $idEmpresas = $empresa->listar();
+        foreach($idEmpresas as $id){
+            echo "Id de la empresa: ".$id->getIdEmpresa()."\n";
+        }
         echo "Ingrese el id de la empresa que desea ver: ";
         $idEmpresa = trim(fgets(STDIN));
+        $cantViajesEmpresa = $viaje->listar("idempresa=$idEmpresa");
         if($empresa->buscar($idEmpresa)){
-            echo $empresa;
+            echo $empresa."\nCantidad de viajes asociados a la empresa: ".count($cantViajesEmpresa)."\n";
         }else{
             echo "No hay una empresa con ese id en la base de datos.\n";
         }
@@ -281,6 +286,6 @@ switch($opcion){
         echo "bai bai";
         break;
 }
-}while($opcion != 10)
+}while($opcion != 10);
 
 ?>
