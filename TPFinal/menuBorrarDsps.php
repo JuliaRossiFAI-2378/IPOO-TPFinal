@@ -85,11 +85,14 @@ switch($opcion){
                 $opcionMenuEmpresa = solicitarNumeroEntre(1,4);
                 switch($opcionMenuEmpresa){
                     case 1://editar id empresa
-                        echo "Ingrese el nuevo id de empresa: ";
+                        echo "Ingrese el nuevo ID de empresa: ";
                         $nuevoIdEmpresa = trim(fgets(STDIN));
                         $empresa->setIdEmpresa($nuevoIdEmpresa);
-                        $empresa->modificar();
-                        break;
+                        if (($empresa->listar(" idEmpresa = " . $empresa->getIdEmpresa())) != null){
+                            $empresa->modificar();
+                        }else{
+                            echo "Ya existe una empresa con ese ID";
+                        }
                     case 2://editar nombre empresa
                         echo "Ingrese el nuevo nombre de empresa: ";
                         $nuevoNombre = trim(fgets(STDIN));
