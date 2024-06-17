@@ -130,9 +130,25 @@ switch($opcion){
         echo "\nIngrese el id de la empresa que desea eliminar: ";
         $idEmpresa = trim(fgets(STDIN));
         if($empresa->buscar($idEmpresa)){
-            $empresa->eliminar();
-            //aca se puede hacer un checkeo de dependencias
-            //tipo, "esto romperia un viaje, desea continuar?"
+            if (($viajes = $viaje->listar(" idEmpresa = " . $empresa->getIdEmpresa())) != null){
+                echo "Existen los siguientes viajes de la empresa: " . $idEmpresa . "\n";
+                echo "---------------------------------------------------------";
+                foreach($viajes as $v){
+                    echo $v;
+                }
+                echo "---------------------------------------------------------";
+                echo "seguro que desea eliminar la empresa " . $empresa->getNombre() . " de id: " . $idEmpresa . "? (S/N)";
+                $eleccion = strtoupper(trim(fgets(STDIN)));
+                if($eleccion == "S"){
+                    $empresa->eliminar();
+                    echo "todo piola, borrada.";
+                }else{
+                    echo "operacion cancelada";
+                }
+            }else{
+                $empresa->eliminar();
+                echo "todo piola, borrada.";
+            }
         }else{
             echo "\nNo hay una empresa con ese id en la base de datos.\n";
         }
