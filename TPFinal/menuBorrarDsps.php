@@ -20,7 +20,7 @@ function verIDsEmpresas(){
     $empresa = new Empresa();
     $idEmpresas = $empresa->listar();
     foreach($idEmpresas as $id){
-        echo "\nId de la empresa: ".$id->getIdEmpresa();
+        echo "\nEmpresa llamada '".$id->getNombre()."' con ID numero ".$id->getIdEmpresa();
     }
     echo "\n";
 }
@@ -29,6 +29,14 @@ function verIDsViajes(){
     $idViaje = $viaje->listar();
     foreach($idViaje as $id){
         echo "\nId del viaje: ".$id->getIdViaje();
+    }
+    echo "\n";
+}
+function verIDsResponsables(){
+    $responsable = new ResponsableV();
+    $idResponsable = $responsable->listar();
+    foreach($idResponsable as $id){
+        echo "\nResponsable llamado/a '".$id->getNombre()."' con ID numero ".$id->getNumEmpleado();
     }
     echo "\n";
 }
@@ -158,14 +166,20 @@ switch($opcion){
         $destViaje = trim(fgets(STDIN));
         echo "Ingrese la cantidad maxima de pasajeros: ";
         $cantidadMaximaPasajeros = trim(fgets(STDIN));
+        verIDsEmpresas();
         echo "Ingrese el id de la empresa: ";
         $idEmpresa = trim(fgets(STDIN));
         echo "Ingrese el costo del viaje: ";
         $costoViaje = trim(fgets(STDIN));
+        verIDsResponsables();
         echo "Ingrese el numero de empleado del responsable: ";
         $numeroEmpleado = trim(fgets(STDIN));
         $viaje->cargar(null,$destViaje,$cantidadMaximaPasajeros,$idEmpresa,[],$numeroEmpleado, $costoViaje, 0);
-        $viaje->ingresar();
+        if($viaje->ingresar()){
+            echo "\nViaje ingresado con exito.";
+        }else{
+            //tenemos que manejar mejor los errores para que no explote en caso de fallar
+        }
         break;
     case 6://visualizar datos viaje
         verIDsViajes();
