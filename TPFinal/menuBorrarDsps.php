@@ -1,7 +1,21 @@
 <?php
-
+include_once 'Persona.php';
+include_once 'Pasajeros.php';
+include_once 'ResponsableV.php';
+include_once 'Viaje.php';
+include_once 'Empresa.php';
+include_once 'BDViajes.php';
+$viaje = new Viaje();
+function solicitarNumeroEntre($minimo,$maximo){
+    $numero = trim(fgets(STDIN));
+    while (!($numero>=$minimo && $numero<=$maximo) || !(is_numeric($numero))){
+        echo "Debe ingresar un numero que este entre ".$minimo." y ".$maximo.": ";
+        $numero = trim(fgets(STDIN));
+    }
+    return $numero;
+}
 function seleccionarOpcion(){
-    echo "\n[1] Ingresar un empresa.\n";//falta testear
+    echo "\n[1] Ingresar un empresa.\n";//funcional, falta hacer a prueba de fallos
     echo "[2] Visualizar datos empresa.\n";//falta testear
     echo "[3] Editar datos empresa.\n";//falta testear
     echo "[4] Eliminar empresa.\n";//FALTA HACER//creo que ya esta solo falta el checkeo?
@@ -74,7 +88,7 @@ switch($opcion){
                     case 4://volver atras
                         break;
                 }
-            }while($opcion!=4);
+            }while($opcionMenuEmpresa!=4);
         }else{
             echo "No hay una empresa con ese id en la base de datos.\n";     
         }

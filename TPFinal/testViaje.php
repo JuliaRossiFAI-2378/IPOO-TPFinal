@@ -8,6 +8,7 @@ include_once 'BDViajes.php';
  * presente un menú que permita cargar la información del viaje, modificar y ver sus datos. */
 
 $responsable = new ResponsableV();
+$viaje = new Viaje();
 //$responsable->cargar("Millie","Parfait",1231231,66642069,5,10);
 /**if($responsable->ingresar()){
     echo "\n:))))))))))))))))))YIPPEEEEEEEEEEEE\n\n\n";
@@ -15,7 +16,7 @@ $responsable = new ResponsableV();
 //$pas1 = new PasajerosEstandares("Juan","Perez",123123,321321,20,65464);
 //$pas2 = new PasajerosEspeciales("Macarena","Lopez",879798,546465,60,12332,true,false,true);
 
-$viaje = new Viaje();
+
 //$viaje->cargar(13,"Neuquen",5,[],$responsable->getNumEmpleado(),20000,0);
 
 function solicitarNumeroEntre($minimo,$maximo){
@@ -66,25 +67,25 @@ do{
             $viaje->cargar(null,$destViaje,$cantidadMaximaPasajeros,$idEmpresa,[],$numeroEmpleado, $costoViaje, 0);
             $viaje->ingresar();
             break;
-        case 2:
+        case 2://no funciona
             echo "Ingrese el nuevo id del viaje: ";
             $nuevoIdViaje = trim(fgets(STDIN));
             $viaje->setIdViaje($nuevoIdViaje);
             $viaje->modificar();
             break;
-        case 3:
+        case 3://no funciona
             echo "Ingrese el nuevo destino de viaje: ";
             $nuevoDestinoViaje = trim(fgets(STDIN));
             $viaje->setDestino($nuevoDestinoViaje);
             $viaje->modificar();
             break;
-        case 4:
+        case 4://no funciona
             echo "Ingrese la nueva cantidad maxima de pasajeros: ";
             $nuevaCantMaxPasajeros = trim(fgets(STDIN));
             $viaje->setCantMaxPasajeros($nuevaCantMaxPasajeros);
             $viaje->modificar();
             break;
-        case 5:
+        case 5://no funciona
             echo "Ingrese el nuevo costo del viaje: ";
             $costoViaje = trim(fgets(STDIN));
             while(!(is_numeric($costoViaje)) || $costoViaje < 0){
