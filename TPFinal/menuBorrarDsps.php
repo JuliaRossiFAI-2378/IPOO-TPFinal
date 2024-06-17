@@ -28,7 +28,7 @@ function verIDsViajes(){
     $viaje = new Viaje();
     $idViaje = $viaje->listar();
     foreach($idViaje as $id){
-        echo "\nId del viaje: ".$id->getIdViaje();
+        echo "\nViaje con destino a '".$id->getDestino()."' e ID numero ".$id->getIdViaje();
     }
     echo "\n";
 }
