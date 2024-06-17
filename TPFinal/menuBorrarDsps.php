@@ -1,15 +1,15 @@
 <?php
 
 function seleccionarOpcion(){
-    echo "\n[1] Ingresar un empresa.\n";
-    echo "[2] Visualizar datos empresa.\n";
-    echo "[3] Editar datos empresa.\n";
-    echo "[4] Eliminar empresa.\n";
-    echo "[5] Ingresar un viaje.\n";
-    echo "[6] Visualizar datos viaje.\n";
-    echo "[7] Editar datos un viaje.\n";
-    echo "[8] Eliminar un viaje.\n";
-    echo "[9] Visualizar todos los viajes.\n";
+    echo "\n[1] Ingresar un empresa.\n";//falta testear
+    echo "[2] Visualizar datos empresa.\n";//falta testear
+    echo "[3] Editar datos empresa.\n";//falta testear
+    echo "[4] Eliminar empresa.\n";//FALTA HACER
+    echo "[5] Ingresar un viaje.\n";//deberia funcionar pero falta testear
+    echo "[6] Visualizar datos viaje.\n";//deberia funcionar pero falta testear
+    echo "[7] Editar datos un viaje.\n";//falta mostrar menu
+    echo "[8] Eliminar un viaje.\n";//esta funcional, pero deberia agregarse un mensaje si hay pasajeros en el viaje
+    echo "[9] Visualizar todos los viajes.\n";//no esta hecho pero deberia funcionar el de testViaje.php
     echo "[10] Salir.\n";
     echo "Ingrese la opcion del menu que desea elegir: ";
     //Verifica que el numero elegido vaya unicamente entre las opciones del menu
