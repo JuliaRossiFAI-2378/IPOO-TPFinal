@@ -263,7 +263,6 @@ switch($opcion){
                             echo "[3]Modificar el telefono del pasajero.\n";
                             echo "[4]Modificar el documento del pasajero.\n";
                             echo "[5]Volver al menu anterior.\n";
-                            $opcionMenuPasajeros = solicitarNumeroEntre(1,5);
                             do{//no sabemos si vamso a tener la coleccion o no, asique depende la implementacion
                                 $opcionMenuPasajeros = solicitarNumeroEntre(1,5);
                                 switch($opcionMenuPasajeros){
@@ -299,8 +298,8 @@ switch($opcion){
                             echo "[5]Modificar el documento del empleado responsable del viaje.\n";
                             echo "[6]Modificar el numero de licencia del empleado responsable del viaje.\n";
                             echo "[7]Volver al menu anterior.\n";
-                            $opcionMenuResponsable = solicitarNumeroEntre(1,7);
                             do{
+                                $opcionMenuResponsable = solicitarNumeroEntre(1,7);
                                 switch($opcionMenuResponsable){//misma situacion que editar empleado
                                     case 1://modificar numero empleado
                                         break;
