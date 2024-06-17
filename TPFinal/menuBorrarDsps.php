@@ -165,10 +165,14 @@ switch($opcion){
             do{
                 switch($opcion){
                     case 1://editar id viaje
-                        echo "Ingrese el nuevo id de viaje: ";
+                        echo "Ingrese el nuevo ID de viaje: ";
                         $nuevoIdViaje = trim(fgets(STDIN));
                         $viaje->setIdViaje($nuevoIdViaje);
-                        $viaje->modificar();
+                        if (($viaje->listar(" idViaje = " . $viaje->getIdEmpresa())) != null){
+                            $viaje->modificar();
+                        }else{
+                            echo "Ya existe un viaje con ese ID";
+                        }
                         break;
                     case 2://editar destino
                         echo "Ingrese el nuevo destino: ";
