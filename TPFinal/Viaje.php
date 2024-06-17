@@ -8,12 +8,14 @@ class Viaje{
     private $costoViaje;
     private $sumaCostos;
     private $mensajeError;
-    
+    private $idEmpresa;
+
     public function __construct()
     {
         $this->idViaje = 0;
         $this->destino = "";
         $this->cantMaxPasajeros = 0;
+        $this->idEmpresa = 0;
         $this->colPasajeros = [];
         $this->numEmpleado = null;
         $this->costoViaje = 0;
@@ -37,14 +39,20 @@ class Viaje{
     public function setCantMaxPasajeros($newCantMaxPasajeros){
         $this->cantMaxPasajeros = $newCantMaxPasajeros;
     }
+    public function getIdEmpresa(){
+        return $this->idEmpresa;
+    }
+    public function setIdEmpresa($newIdEmpresa){
+        $this->idEmpresa = $newIdEmpresa;
+    }
     public function getColPasajeros(){
-        $colPasajeros = [];
+        $this->colPasajeros = [];
         $pasajero = new Pasajeros();
         $sql = "idviaje=".$this->getIdViaje();
         if($temp = $pasajero->listar($sql)){
-            $colPasajeros = $temp;
+            $this->colPasajeros = $temp;
         }
-        return $colPasajeros;
+        return $this->colPasajeros;
     }
     public function setColPasajeros($newColPasajeros){
         $this->colPasajeros = $newColPasajeros;
@@ -86,7 +94,10 @@ class Viaje{
         $cad = "\nIdViaje: ".$this->getIdViaje()."\nDestino: ".$this->getDestino()."\nCantidad maxima de pasajeros: ".
         $this->getCantMaxPasajeros()."\nCantidad actual de pasajeros: ".count($this->getColPasajeros()).
         "\nCosto del viaje: $".$this->getCostoViaje()."\nRecaudacion total del viaje: $".$this->getSumaCostos().
-        "\n\t\tInformacion de los pasajeros";
+        "\n\tInformacion del responsable del viaje";
+        $responsable = new ResponsableV();
+        $responsable->buscar($this->getNumEmpleado());
+        $cad .= $responsable."\n\t\tInformacion de los pasajeros";
         $pasajeros = $this->getColPasajeros();
         for($i=0; $i<count($pasajeros); $i++){
             $cad .= "\n\tPasajero ".$i+1 .$pasajeros[$i];
@@ -94,10 +105,11 @@ class Viaje{
         return $cad;
     }
 
-    public function cargar($idViaje,$destino,$cantMaxPasajeros,$colPasajeros,$numEmpleado,$costoViaje,$sumaCostos){
+    public function cargar($idViaje,$destino,$cantMaxPasajeros,$idEmpresa,$colPasajeros,$numEmpleado,$costoViaje,$sumaCostos){
         $this->idViaje = $idViaje;
         $this->destino = $destino;
         $this->cantMaxPasajeros = $cantMaxPasajeros;
+        $this->idEmpresa = $idEmpresa;
         $this->colPasajeros = $colPasajeros;
         $this->numEmpleado = $numEmpleado;
         $this->costoViaje = $costoViaje;
@@ -202,8 +214,8 @@ class Viaje{
     public function ingresar(){
         $baseDatos = new BDViajes();
         $resp = false;
-        $sql = "INSERT INTO viaje(idviaje, destino, cantmaxpasajeros, rnumeroempleado, importe) VALUES (NULL,'".$this->getDestino().
-        "', ".$this->getCantMaxPasajeros().", ".$this->getNumEmpleado().", ".$this->getCostoViaje().")";
+        $sql = "INSERT INTO viaje(idviaje, destino, cantmaxpasajeros, idempresa, rnumeroempleado, importe) VALUES (NULL,'".$this->getDestino().
+        "', ".$this->getCantMaxPasajeros().", ".$this->getIdEmpresa().", ".$this->getNumEmpleado().", ".$this->getCostoViaje().")";
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
                 $resp = true;
@@ -226,6 +238,7 @@ class Viaje{
                     $this->setIdViaje($id);
                     $this->setDestino($result['destino']);
                     $this->setCantMaxPasajeros($result['cantmaxpasajeros']);
+                    $this->setIdEmpresa($result['idempresa']);
                     $this->setNumEmpleado(['rnumeroempleado']);
                     $this->setCostoViaje($result['importe']);
                     $resp = true;
@@ -255,10 +268,11 @@ class Viaje{
                     $idViaje = $tupla['idviaje'];
                     $destino = $tupla['destino'];
                     $cantMaxPasajeros = $tupla['cantmaxpasajeros'];
+                    $idEmpresa = $tupla['idempresa'];
                     $numeroEmpleado = $tupla['rnumeroempleado'];
                     $importe = $tupla['importe'];
                     $viaje = new Viaje();
-                    $viaje->cargar($idViaje,$destino,$cantMaxPasajeros,[],$numeroEmpleado,$importe,0);
+                    $viaje->cargar($idViaje,$destino,$cantMaxPasajeros,$idEmpresa,[],$numeroEmpleado,$importe,0);
                     //falta ver como manejar el tema de la colPasajeros y la sumaCostos 
                     $resultados[] = $viaje;
                 }
@@ -291,7 +305,7 @@ class Viaje{
         $baseDatos = new BDViajes();
         $resp = false;
         $sql = "UPDATE viaje SET idviaje=".$this->getIdViaje().", destino='".$this->getDestino()."', cantmaxpasajeros=".
-            $this->getCantMaxPasajeros().", rnumeroempleado=".$this->getNumEmpleado().", importe=".$this->getCostoViaje();
+            $this->getCantMaxPasajeros().", idempresa=".$this->getIdEmpresa().", rnumeroempleado=".$this->getNumEmpleado().", importe=".$this->getCostoViaje();
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
                 $resp = true;
