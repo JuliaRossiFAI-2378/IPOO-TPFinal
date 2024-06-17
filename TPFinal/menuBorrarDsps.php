@@ -16,6 +16,13 @@ function solicitarNumeroEntre($minimo,$maximo){
     }
     return $numero;
 }
+function verIDsEmpresas(){
+    $empresa = new Empresa();
+    $idEmpresas = $empresa->listar();
+    foreach($idEmpresas as $id){
+        echo "\nId de la empresa: ".$id->getIdEmpresa();
+    }
+}
 function seleccionarOpcion(){
     //deberiamos mostrar las empresas/viajes que se pueden elegir para editar/eliminar/visualizar, maniana veo como
     echo "\n[1] Ingresar un empresa.\n";//funcional, falta hacer a prueba de fallos
@@ -55,11 +62,8 @@ switch($opcion){
         $empresa->ingresar();
         break;
     case 2://visualizar datos empresa
-        $idEmpresas = $empresa->listar();
-        foreach($idEmpresas as $id){
-            echo "Id de la empresa: ".$id->getIdEmpresa()."\n";
-        }
-        echo "Ingrese el id de la empresa que desea ver: ";
+        verIDsEmpresas();
+        echo "\n\nIngrese el id de la empresa que desea ver: ";
         $idEmpresa = trim(fgets(STDIN));
         $cantViajesEmpresa = $viaje->listar("idempresa=$idEmpresa");
         if($empresa->buscar($idEmpresa)){
@@ -69,6 +73,7 @@ switch($opcion){
         }
         break;
     case 3://editar datos empresa__>
+        verIDsEmpresas();
         echo "Ingrese el id de la empresa que desea editar: ";
         $idEmpresa = trim(fgets(STDIN));
         if($empresa->buscar($idEmpresa)){           
@@ -106,6 +111,7 @@ switch($opcion){
         }
         break;
     case 4://eliminar empresa
+        verIDsEmpresas();
         echo "Ingrese el id de la empresa que desea eliminar: ";
         $idEmpresa = trim(fgets(STDIN));
         if($empresa->buscar($idEmpresa)){
@@ -287,5 +293,4 @@ switch($opcion){
         break;
 }
 }while($opcion != 10);
-
 ?>
