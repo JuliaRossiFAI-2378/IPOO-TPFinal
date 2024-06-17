@@ -221,9 +221,9 @@ switch($opcion){
             echo "[5]Editar los datos de un empleado responsable por el viaje.\n";
             echo "[6]Modificar el costo del viaje.\n";
             echo "[7]Volver al menu anterior.\n";
-            $opcion = solicitarNumeroEntre(1,7);
             do{
-                switch($opcion){
+                $opcionMenuViajes = solicitarNumeroEntre(1,7);
+                switch($opcionMenuViajes){
                     case 1://editar id viaje
                         echo "Ingrese el nuevo ID de viaje: ";
                         $nuevoIdViaje = trim(fgets(STDIN));
@@ -247,14 +247,10 @@ switch($opcion){
                         $viaje->modificar();
                         break;
                     case 4://editar datos de un pasajero
-                        $cantPasajeros = count($viaje->getColPasajeros());
+                        $pasajeros = $viaje->getColPasajeros();
                         //Verifica que haya pasajeros para modificar
-                        if ($cantPasajeros == 0){
-                            echo "No hay pasajeros registrados.\n";
-                        }else{
-                            $pasajeros = $viaje->getColPasajeros();
+                        if (count($pasajeros) != 0){
                             //Imprime los pasajeros para que el usuario sepa que numero seleccionar
-                            //Muestra los pasajeros asi el usuario sabe que numero de pasajero elegir
                             for($i=0; $i<$cantPasajeros; $i++){
                                 echo "\nPasajero numero: ".$i+1;
                                 echo $pasajeros[$i];
@@ -265,12 +261,12 @@ switch($opcion){
                             echo "[1]Modificar el nombre del pasajero.\n";
                             echo "[2]Modificar el apellido del pasajero.\n";
                             echo "[3]Modificar el telefono del pasajero.\n";
-                            echo "[4]Modificar el documento de el.\n";
+                            echo "[4]Modificar el documento del pasajero.\n";
                             echo "[5]Volver al menu anterior.\n";
-                            $opcion = solicitarNumeroEntre(1,5);
+                            $opcionMenuPasajeros = solicitarNumeroEntre(1,5);
                             do{//no sabemos si vamso a tener la coleccion o no, asique depende la implementacion
-                                $opcion = solicitarNumeroEntre(1,5);
-                                switch($opcion){
+                                $opcionMenuPasajeros = solicitarNumeroEntre(1,5);
+                                switch($opcionMenuPasajeros){
                                     case 1://modificar nombre pasajero
                                         break;
                                     case 2://modificar apellido pasajero
@@ -282,7 +278,10 @@ switch($opcion){
                                     case 5://volver atras
                                         break;
                                 }
-                            }while($opcion!=5);
+                            }while($opcionMenuPasajeros!=5);
+                            
+                        }else{
+                            echo "No hay pasajeros registrados.\n";
                         }
                         break;
                     case 5://editar datos de empleado responsable
@@ -300,9 +299,9 @@ switch($opcion){
                             echo "[5]Modificar el documento del empleado responsable del viaje.\n";
                             echo "[6]Modificar el numero de licencia del empleado responsable del viaje.\n";
                             echo "[7]Volver al menu anterior.\n";
-                            $opcion = solicitarNumeroEntre(1,7);
+                            $opcionMenuResponsable = solicitarNumeroEntre(1,7);
                             do{
-                                switch($opcion){//misma situacion que editar empleado
+                                switch($opcionMenuResponsable){//misma situacion que editar empleado
                                     case 1://modificar numero empleado
                                         break;
                                     case 2://modificar nombre empleado
@@ -318,7 +317,7 @@ switch($opcion){
                                     case 7://volver atras
                                         break;
                                 }
-                            }while($opcion!=7);
+                            }while($opcionMenuResponsable!=7);
                         }
                         break;
                     case 6://editar importe
@@ -330,7 +329,7 @@ switch($opcion){
                     case 7://volver atras
                         break;
                 }
-            }while($opcion != 7);
+            }while($opcionMenuViajes != 7);
         }else{
             echo "\nNo hay una viaje con ese id en la base de datos.\n";
         }
