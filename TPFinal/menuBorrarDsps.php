@@ -213,7 +213,7 @@ switch($opcion){
         verIDsViajes();
         echo "\nIngrese el id del viaje que desea editar: ";
         $idViaje = trim(fgets(STDIN));
-        if($viaje->buscar($idviaje)){
+        if($viaje->buscar($idViaje)){
             echo "\n[1]Modificar el id del viaje.\n";
             echo "[2]Modificar el destino del viaje.\n";
             echo "[3]Modificar la cantidad maxima de pasajeros en el viaje.\n";
