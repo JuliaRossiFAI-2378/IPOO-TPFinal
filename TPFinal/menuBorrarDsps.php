@@ -4,10 +4,10 @@ function seleccionarOpcion(){
     echo "\n[1] Ingresar un empresa.\n";//falta testear
     echo "[2] Visualizar datos empresa.\n";//falta testear
     echo "[3] Editar datos empresa.\n";//falta testear
-    echo "[4] Eliminar empresa.\n";//FALTA HACER
+    echo "[4] Eliminar empresa.\n";//FALTA HACER//creo que ya esta solo falta el checkeo?
     echo "[5] Ingresar un viaje.\n";//deberia funcionar pero falta testear
     echo "[6] Visualizar datos viaje.\n";//deberia funcionar pero falta testear
-    echo "[7] Editar datos un viaje.\n";//falta mostrar menu
+    echo "[7] Editar datos un viaje.\n";//falta mostrar menu// creo que ya esta?
     echo "[8] Eliminar un viaje.\n";//esta funcional, pero deberia agregarse un mensaje si hay pasajeros en el viaje
     echo "[9] Visualizar todos los viajes.\n";//no esta hecho pero deberia funcionar el de testViaje.php
     echo "[10] Salir.\n";
