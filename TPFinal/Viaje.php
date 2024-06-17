@@ -304,8 +304,9 @@ class Viaje{
     public function modificar(){
         $baseDatos = new BDViajes();
         $resp = false;
-        $sql = "UPDATE viaje SET idviaje=".$this->getIdViaje().", destino='".$this->getDestino()."', cantmaxpasajeros=".
-            $this->getCantMaxPasajeros().", idempresa=".$this->getIdEmpresa().", rnumeroempleado=".$this->getNumEmpleado().", importe=".$this->getCostoViaje();
+        $sql = "UPDATE viaje SET destino='".$this->getDestino()."', cantmaxpasajeros=".
+            $this->getCantMaxPasajeros().", idempresa=".$this->getIdEmpresa().", rnumeroempleado=".$this->getNumEmpleado().
+            ", importe=".$this->getCostoViaje()." WHERE idviaje=".$this->getIdViaje();
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
                 $resp = true;
