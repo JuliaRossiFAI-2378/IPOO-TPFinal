@@ -22,6 +22,7 @@ function verIDsEmpresas(){
     foreach($idEmpresas as $id){
         echo "\nId de la empresa: ".$id->getIdEmpresa();
     }
+    echo "\n";
 }
 function seleccionarOpcion(){
     //deberiamos mostrar las empresas/viajes que se pueden elegir para editar/eliminar/visualizar, maniana veo como
@@ -63,18 +64,18 @@ switch($opcion){
         break;
     case 2://visualizar datos empresa
         verIDsEmpresas();
-        echo "\n\nIngrese el id de la empresa que desea ver: ";
+        echo "\nIngrese el id de la empresa que desea ver: ";
         $idEmpresa = trim(fgets(STDIN));
         $cantViajesEmpresa = $viaje->listar("idempresa=$idEmpresa");
         if($empresa->buscar($idEmpresa)){
             echo $empresa."\nCantidad de viajes asociados a la empresa: ".count($cantViajesEmpresa)."\n";
         }else{
-            echo "No hay una empresa con ese id en la base de datos.\n";
+            echo "\nNo hay una empresa con ese id en la base de datos.\n";
         }
         break;
     case 3://editar datos empresa__>
         verIDsEmpresas();
-        echo "Ingrese el id de la empresa que desea editar: ";
+        echo "\nIngrese el id de la empresa que desea editar: ";
         $idEmpresa = trim(fgets(STDIN));
         if($empresa->buscar($idEmpresa)){           
             do{
@@ -82,6 +83,7 @@ switch($opcion){
                 echo "[2]Modificar el nombre de la empresa.\n";
                 echo "[3]Modificar la direccion de la empresa.\n";
                 echo "[4]Volver al menu anterior.\n";
+                echo "Ingrese la opcion del menu que desea elegir: ";
                 $opcionMenuEmpresa = solicitarNumeroEntre(1,4);
                 switch($opcionMenuEmpresa){
                     case 1://editar id empresa
@@ -111,19 +113,19 @@ switch($opcion){
                 }
             }while($opcionMenuEmpresa!=4);
         }else{
-            echo "No hay una empresa con ese id en la base de datos.\n";     
+            echo "\nNo hay una empresa con ese id en la base de datos.\n";     
         }
         break;
     case 4://eliminar empresa
         verIDsEmpresas();
-        echo "Ingrese el id de la empresa que desea eliminar: ";
+        echo "\nIngrese el id de la empresa que desea eliminar: ";
         $idEmpresa = trim(fgets(STDIN));
         if($empresa->buscar($idEmpresa)){
             $empresa->eliminar();
             //aca se puede hacer un checkeo de dependencias
             //tipo, "esto romperia un viaje, desea continuar?"
         }else{
-            echo "No hay una empresa con ese id en la base de datos.\n";
+            echo "\nNo hay una empresa con ese id en la base de datos.\n";
         }
         break;
     case 5://ingresar viaje
@@ -278,7 +280,7 @@ switch($opcion){
                 }
             }while($opcion != 8);
         }else{
-            echo "No hay una viaje con ese id en la base de datos.\n";
+            echo "\nNo hay una viaje con ese id en la base de datos.\n";
         }
         break;
     case 8://eliminar un viaje
