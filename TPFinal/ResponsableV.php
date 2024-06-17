@@ -67,7 +67,7 @@ class ResponsableV extends Persona{
                 $resultadoResponsables = [];
                 while($tupla = $baseDatos->registro()){
                     $responsable = new ResponsableV();
-                    $responsable->buscar($tupla['rdocumento']);
+                    $responsable->buscar($tupla['numeroempleado']);
                     $resultadoResponsables[] = $responsable;
                 }
             }else{
