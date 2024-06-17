@@ -222,6 +222,7 @@ switch($opcion){
                 echo "[5]Editar los datos de un empleado responsable por el viaje.\n";
                 echo "[6]Modificar el costo del viaje.\n";
                 echo "[7]Volver al menu anterior.\n";
+                echo "Ingrese la opcion del menu que desea elegir: ";
                 $opcionMenuViajes = solicitarNumeroEntre(1,7);
                 switch($opcionMenuViajes){
                     case 1://editar id viaje
@@ -239,12 +240,14 @@ switch($opcion){
                         $nuevoDestino = trim(fgets(STDIN));
                         $viaje->setDestino($nuevoDestino);
                         $viaje->modificar();
+                        echo "\nModificacion realizada con exito.";
                         break;
                     case 3://editar cantidad maxima de pasajeros
                         echo "Ingrese nueva cantidad maxima de pasajeros: ";
                         $nuevoCantMaxPasajeros = trim(fgets(STDIN));
                         $viaje->setCantMaxPasajeros($nuevoCantMaxPasajeros);
                         $viaje->modificar();
+                        echo "\nModificacion realizada con exito.";
                         break;
                     case 4://editar datos de un pasajero
                         $pasajeros = $viaje->getColPasajeros();
@@ -300,6 +303,7 @@ switch($opcion){
                                 echo "[5]Modificar el documento del empleado responsable del viaje.\n";
                                 echo "[6]Modificar el numero de licencia del empleado responsable del viaje.\n";
                                 echo "[7]Volver al menu anterior.\n";
+                                echo "Ingrese la opcion del menu que desea elegir: ";
                                 $opcionMenuResponsable = solicitarNumeroEntre(1,7);
                                 switch($opcionMenuResponsable){//misma situacion que editar empleado
                                     case 1://modificar numero empleado
