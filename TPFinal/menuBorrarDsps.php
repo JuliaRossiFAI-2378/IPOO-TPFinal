@@ -103,48 +103,36 @@ switch($opcion){
             echo "\nNo hay una empresa con ese id en la base de datos.\n";
         }
         break;
-    case 3://editar datos empresa__>
+    case 3://editar datos empresa
         verIDsEmpresas();
         echo "\nIngrese el id de la empresa que desea editar: ";
         $idEmpresa = trim(fgets(STDIN));
         if($empresa->buscar($idEmpresa)){           
             do{
-                echo "\n[1]Modificar el id de la empresa.\n";
-                echo "[2]Modificar el nombre de la empresa.\n";
-                echo "[3]Modificar la direccion de la empresa.\n";
-                echo "[4]Volver al menu anterior.\n";
+                echo "\n[1]Modificar el nombre de la empresa.\n";
+                echo "[2]Modificar la direccion de la empresa.\n";
+                echo "[3]Volver al menu anterior.\n";
                 echo "Ingrese la opcion del menu que desea elegir: ";
-                $opcionMenuEmpresa = solicitarNumeroEntre(1,4);
+                $opcionMenuEmpresa = solicitarNumeroEntre(1,3);
                 switch($opcionMenuEmpresa){
-                    case 1://editar id empresa
-                        echo "Ingrese el nuevo ID de empresa: ";
-                        $nuevoIdEmpresa = trim(fgets(STDIN));
-                        $empresa->setIdEmpresa($nuevoIdEmpresa);
-                        if (($empresa->listar(" idEmpresa = " . $empresa->getIdEmpresa())) != null){
-                            $empresa->modificar();
-                            echo "\nCambio realizado con exito.";
-                        }else{
-                            echo "Ya existe una empresa con ese ID";
-                        }
-                        break;
-                    case 2://editar nombre empresa
+                    case 1://editar nombre empresa
                         echo "Ingrese el nuevo nombre de empresa: ";
                         $nuevoNombre = trim(fgets(STDIN));
                         $empresa->setNombre($nuevoNombre);
                         $empresa->modificar();
                         echo "\nCambio realizado con exito.";
                         break;
-                    case 3://editar direccion empresa
+                    case 2://editar direccion empresa
                         echo "Ingrese la nueva direccion de empresa: ";
                         $nuevoDireccion = trim(fgets(STDIN));
                         $empresa->setDireccion($nuevoDireccion);
                         $empresa->modificar();
                         echo "\nCambio realizado con exito.";
                         break;
-                    case 4://volver atras
+                    case 3://volver atras
                         break;
                 }
-            }while($opcionMenuEmpresa!=4);
+            }while($opcionMenuEmpresa!=3);
         }else{
             echo "\nNo hay una empresa con ese id en la base de datos.\n";     
         }
@@ -154,7 +142,7 @@ switch($opcion){
         echo "\nIngrese el id de la empresa que desea eliminar: ";
         $idEmpresa = trim(fgets(STDIN));
         if($empresa->buscar($idEmpresa)){
-            if (($viajes = $viaje->listar(" idEmpresa = " . $empresa->getIdEmpresa())) != null){
+            if (($viajes = $viaje->listar("idempresa=" . $empresa->getIdEmpresa())) != null){
                 echo "Existen los siguientes viajes de la empresa: " . $idEmpresa . "\n";
                 echo "---------------------------------------------------------";
                 foreach($viajes as $v){
@@ -163,9 +151,11 @@ switch($opcion){
                     }
                 }
                 echo "---------------------------------------------------------";
-                echo "seguro que desea eliminar la empresa " . $empresa->getNombre() . " de id: " . $idEmpresa . "? (S/N)";
-                $eleccion = strtoupper(trim(fgets(STDIN)));
-                if($eleccion == "S"){
+                echo "Seguro que desea eliminar la empresa '" . $empresa->getNombre() . "' de id: " . $idEmpresa . "?";
+                echo "\n[1]Eliminar empresa. (esta accion no se puede deshacer)";
+                echo "\n[2]Cancelar operacion.";
+                $eleccion = solicitarNumeroEntre(1,2);
+                if($eleccion == 1){
                     $empresa->eliminar();
                     echo "\nEmpresa borrada con exito.";
                 }else{
