@@ -311,14 +311,30 @@ switch($opcion){
         }
         break;
     case 8://eliminar un viaje
-        verIDsViajes();
+        verIDsviajes();
         echo "\nIngrese el id del viaje que desea eliminar: ";
-        $idViaje = trim(fgets(STDIN));
-        if($viaje->buscar($idViaje)){
-            $viaje->eliminar();
-            echo "\nViaje eliminado con exito.";
-            //aca se puede hacer un checkeo de dependencias
-            //tipo, "esto romperia un viaje, desea continuar?"
+        $idviaje = trim(fgets(STDIN));
+        $pasajero = new Persona;
+        if($viaje->buscar($idviaje)){
+            if (($pasajeros = $pasajero->listar(" idviaje = " . $viaje->getIdviaje())) != null){
+                echo "Existen los siguientes pasajeros en el viaje: " . $idviaje . "\n";
+                echo "---------------------------------------------------------";
+                foreach($pasajeros as $p){
+                    echo $p;
+                }
+                echo "---------------------------------------------------------";
+                echo "seguro que desea eliminar el viaje " . $idviaje . "? (S/N)";
+                $eleccion = strtoupper(trim(fgets(STDIN)));
+                if($eleccion == "S"){
+                    $viaje->eliminar();
+                    echo "todo piola, borrado.";
+                }else{
+                    echo "operacion cancelada";
+                }
+            }else{
+                $viaje->eliminar();
+                echo "todo piola, borrado.";
+            }
         }else{
             echo "\nNo hay un viaje con ese id en la base de datos.\n";
         }
