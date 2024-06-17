@@ -40,7 +40,7 @@ function seleccionarOpcion(){
     echo "[4] Eliminar empresa.\n";//FALTA HACER//creo que ya esta solo falta el checkeo?
     //[4]mostrar mensaje cuando la empresa es eliminada con exito (ademas de los checkeos que faltan) 
     echo "[5] Ingresar un viaje.\n";//deberia funcionar pero falta testear
-    echo "[6] Visualizar datos viaje.\n";//deberia funcionar pero falta testear
+    echo "[6] Visualizar datos de un viaje.\n";//deberia funcionar pero falta testear
     echo "[7] Editar datos un viaje.\n";//falta mostrar menu// creo que ya esta?
     echo "[8] Eliminar un viaje.\n";//esta funcional, pero deberia agregarse un mensaje si hay pasajeros en el viaje
     //[8]mostrar mensaje si se elimina con exito
@@ -141,13 +141,13 @@ switch($opcion){
                 $eleccion = strtoupper(trim(fgets(STDIN)));
                 if($eleccion == "S"){
                     $empresa->eliminar();
-                    echo "todo piola, borrada.";
+                    echo "\nEmpresa borrada con exito.";
                 }else{
-                    echo "operacion cancelada";
+                    echo "\nOperacion cancelada.";
                 }
             }else{
                 $empresa->eliminar();
-                echo "todo piola, borrada.";
+                echo "\nEmpresa borrada con exito.";
             }
         }else{
             echo "\nNo hay una empresa con ese id en la base de datos.\n";
@@ -316,15 +316,18 @@ switch($opcion){
         $idViaje = trim(fgets(STDIN));
         if($viaje->buscar($idViaje)){
             $viaje->eliminar();
+            echo "\nViaje eliminado con exito.";
             //aca se puede hacer un checkeo de dependencias
             //tipo, "esto romperia un viaje, desea continuar?"
         }else{
-            echo "No hay un viaje con ese id en la base de datos.\n";
+            echo "\nNo hay un viaje con ese id en la base de datos.\n";
         }
         break;
     case 9://mostrar todos los viajes
-        //aca podemos hacer query, o mostrar una posible coleccion
-        //depende de como manejamos el guardado de vuelta
+        $colViajes = $viaje->listar();
+        foreach($colViajes as $unViaje){
+            echo $unViaje;
+        }
         break;
     case 10://salir
         echo "bai bai";
