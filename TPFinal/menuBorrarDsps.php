@@ -40,6 +40,22 @@ function verIDsResponsables(){
     }
     echo "\n";
 }
+//asume que el id que recibe funciona
+function pasajerosViaje($idViaje){
+    $contienePasajeros = true;
+    $pasajero = new Persona;
+    if(($pasajeros = $pasajero->listar(" idviaje = " . $idViaje)) != null){
+        echo "el viaje " . $idViaje . "contiene los siguientes pasajeros: " . "\n";
+        echo "---------------------------------------------------------";
+        foreach($pasajeros as $p){
+            echo $p;
+        }
+        echo "---------------------------------------------------------";
+    }else{
+        $contienePasajeros = false;
+    }
+    return $contienePasajeros;
+}
 function seleccionarOpcion(){
     echo "\n[1] Ingresar un empresa.\n";//funcional, falta hacer a prueba de fallos
     echo "[2] Visualizar datos empresa.\n";//falta testear
@@ -143,6 +159,8 @@ switch($opcion){
                 echo "---------------------------------------------------------";
                 foreach($viajes as $v){
                     echo $v;
+                    if(pasajerosViaje($v->getIdViaje())){
+                    }
                 }
                 echo "---------------------------------------------------------";
                 echo "seguro que desea eliminar la empresa " . $empresa->getNombre() . " de id: " . $idEmpresa . "? (S/N)";
@@ -330,13 +348,7 @@ switch($opcion){
         $idviaje = trim(fgets(STDIN));
         $pasajero = new Persona;
         if($viaje->buscar($idviaje)){
-            if (($pasajeros = $pasajero->listar(" idviaje = " . $viaje->getIdviaje())) != null){
-                echo "Existen los siguientes pasajeros en el viaje: " . $idviaje . "\n";
-                echo "---------------------------------------------------------";
-                foreach($pasajeros as $p){
-                    echo $p;
-                }
-                echo "---------------------------------------------------------";
+            if (pasajerosViaje($idviaje)){
                 echo "seguro que desea eliminar el viaje " . $idviaje . "? (S/N)";
                 $eleccion = strtoupper(trim(fgets(STDIN)));
                 if($eleccion == "S"){
