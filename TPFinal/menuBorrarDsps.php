@@ -98,6 +98,7 @@ switch($opcion){
                         $empresa->setIdEmpresa($nuevoIdEmpresa);
                         if (($empresa->listar(" idEmpresa = " . $empresa->getIdEmpresa())) != null){
                             $empresa->modificar();
+                            echo "\nCambio realizado con exito.";
                         }else{
                             echo "Ya existe una empresa con ese ID";
                         }
@@ -107,12 +108,14 @@ switch($opcion){
                         $nuevoNombre = trim(fgets(STDIN));
                         $empresa->setNombre($nuevoNombre);
                         $empresa->modificar();
+                        echo "\nCambio realizado con exito.";
                         break;
                     case 3://editar direccion empresa
                         echo "Ingrese la nueva direccion de empresa: ";
                         $nuevoDireccion = trim(fgets(STDIN));
                         $empresa->setDireccion($nuevoDireccion);
                         $empresa->modificar();
+                        echo "\nCambio realizado con exito.";
                         break;
                     case 4://volver atras
                         break;
