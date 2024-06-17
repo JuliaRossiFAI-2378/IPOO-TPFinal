@@ -33,7 +33,6 @@ function verIDsViajes(){
     echo "\n";
 }
 function seleccionarOpcion(){
-    //deberiamos mostrar las empresas/viajes que se pueden elegir para editar/eliminar/visualizar, maniana veo como
     echo "\n[1] Ingresar un empresa.\n";//funcional, falta hacer a prueba de fallos
     echo "[2] Visualizar datos empresa.\n";//falta testear
     echo "[3] Editar datos empresa.\n";//falta testear
@@ -42,7 +41,6 @@ function seleccionarOpcion(){
     //[4]mostrar mensaje cuando la empresa es eliminada con exito (ademas de los checkeos que faltan) 
     echo "[5] Ingresar un viaje.\n";//deberia funcionar pero falta testear
     echo "[6] Visualizar datos viaje.\n";//deberia funcionar pero falta testear
-    //[6]testeando esto creo que deberiamos mostrar los viajes disponibles, maniana me fijo como
     echo "[7] Editar datos un viaje.\n";//falta mostrar menu// creo que ya esta?
     echo "[8] Eliminar un viaje.\n";//esta funcional, pero deberia agregarse un mensaje si hay pasajeros en el viaje
     //[8]mostrar mensaje si se elimina con exito
