@@ -134,7 +134,7 @@ class Empresa{
         $resp = false;
         $baseDatos = new BDViajes();
         $sql = "UPDATE empresa SET enombre='".$this->getNombre()."', edireccion='".$this->getDireccion().
-            " WHERE idempresa=".$this->getIdEmpresa();
+            "' WHERE idempresa=".$this->getIdEmpresa();
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
                 $resp = true;
