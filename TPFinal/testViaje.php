@@ -8,7 +8,7 @@ include_once 'BDViajes.php';
  * presente un menú que permita cargar la información del viaje, modificar y ver sus datos. */
 
 $responsable = new ResponsableV();
-$responsable->cargar("Millie","Parfait",1231231,66642069,5,10);
+//$responsable->cargar("Millie","Parfait",1231231,66642069,5,10);
 /**if($responsable->ingresar()){
     echo "\n:))))))))))))))))))YIPPEEEEEEEEEEEE\n\n\n";
 } */
@@ -57,11 +57,13 @@ do{
             $destViaje = trim(fgets(STDIN));
             echo "Ingrese la cantidad maxima de pasajeros: ";
             $cantidadMaximaPasajeros = trim(fgets(STDIN));
+            echo "Ingrese el id de la empresa: ";
+            $idEmpresa = trim(fgets(STDIN));
             echo "Ingrese el costo del viaje: ";
             $costoViaje = trim(fgets(STDIN));
             echo "Ingrese el numero de empleado del responsable: ";
             $numeroEmpleado = trim(fgets(STDIN));
-            $viaje->cargar(null,$destViaje,$cantidadMaximaPasajeros,[],$numeroEmpleado, $costoViaje, 0);
+            $viaje->cargar(null,$destViaje,$cantidadMaximaPasajeros,$idEmpresa,[],$numeroEmpleado, $costoViaje, 0);
             $viaje->ingresar();
             break;
         case 2:
