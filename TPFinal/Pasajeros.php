@@ -129,7 +129,9 @@ class Pasajeros extends Persona{
         $sql = "UPDATE pasajero SET pdocumento=".$this->getDocumento()." WHERE documento=".$documentoAnterior;
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
-                $resp = true;
+                if(parent::modificarDocumento($documentoAnterior)){
+                    $resp = true;
+                }
             }else{
                 $this->setMensajeError($baseDatos->getERROR());
             }

@@ -160,7 +160,7 @@ class Persona{
         return $resp;
     }
 
-    public function modificarClave($documentoAnterior){
+    public function modificarDocumento($documentoAnterior){
         $resp = false;
         $baseDatos = new BDViajes();
         $sql = "UPDATE persona SET documento=".$this->getDocumento()." WHERE documento=".$documentoAnterior;
