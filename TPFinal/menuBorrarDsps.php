@@ -93,6 +93,7 @@ switch($opcion){
                         }else{
                             echo "Ya existe una empresa con ese ID";
                         }
+                        break;
                     case 2://editar nombre empresa
                         echo "Ingrese el nuevo nombre de empresa: ";
                         $nuevoNombre = trim(fgets(STDIN));
