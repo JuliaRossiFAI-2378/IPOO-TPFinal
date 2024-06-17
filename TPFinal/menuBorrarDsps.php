@@ -65,11 +65,12 @@ function seleccionarOpcion(){
     //[4]mostrar mensaje cuando la empresa es eliminada con exito (ademas de los checkeos que faltan) 
     echo "[5] Ingresar un viaje.\n";//deberia funcionar pero falta testear
     echo "[6] Visualizar datos de un viaje.\n";//deberia funcionar pero falta testear
-    echo "[7] Editar datos un viaje.\n";//falta mostrar menu// creo que ya esta?
+    echo "[7] Editar datos un viaje.\n";//falta editar datos de un pasajero perdon :-)
     echo "[8] Eliminar un viaje.\n";//esta funcional, pero deberia agregarse un mensaje si hay pasajeros en el viaje
     //[8]mostrar mensaje si se elimina con exito
     echo "[9] Visualizar todos los viajes.\n";//no esta hecho pero deberia funcionar el de testViaje.php
-    echo "[10] Salir.\n";
+    //10,11,12
+    echo "[13] Salir.\n";
     echo "Ingrese la opcion del menu que desea elegir: ";
     //Verifica que el numero elegido vaya unicamente entre las opciones del menu
     $opcionMenu = solicitarNumeroEntre(1,10);
@@ -210,7 +211,7 @@ switch($opcion){
                     echo "[2]Modificar el destino del viaje.\n";
                     echo "[3]Modificar la cantidad maxima de pasajeros en el viaje.\n";
                     echo "[4]Editar los datos de un pasajero.\n";
-                    echo "[5]Editar los datos de un empleado responsable por el viaje.\n";
+                    echo "[5]Cambiar responsable.\n";
                     echo "[6]Modificar el costo del viaje.\n";
                     echo "[7]Volver al menu anterior.\n";
                     echo "Ingrese la opcion del menu que desea elegir: ";
@@ -278,41 +279,14 @@ switch($opcion){
                                 echo "No hay pasajeros registrados.\n";
                             }
                             break;
-                        case 5://editar datos de empleado responsable
-                            //aca tenemos que buscar empleado segun el id de empleado
-                            //la cosa es, EN DONDE? o tenemos una coleccion,o hacemos un query
-                            echo "ingrese id de empleado a editar";
+                        case 5://cambiar empleado responsable
+                            verIDsResponsables();
+                            echo "ingrese numero de empleado nuevo";
                             $idEmpleado = trim(fgets(STDIN));
-                            if(0){// !buscarEmpleado($idEmpleado)
-                                echo "no existe empleado con ese id";
+                            if($responsable->buscar($idEmpleado)){
+                                $viaje->setNumEmpleado($idEmpleado);
                             }else{
-                                do{
-                                    echo "[1]Modificar el numero empleado del responsable del viaje.\n";
-                                    echo "[2]Modificar el nombre del empleado responsable del viaje.\n";
-                                    echo "[3]Modificar el apellido del empleado responsable del viaje.\n";
-                                    echo "[4]Modificar el telefono del empleado responsable del viaje.\n";
-                                    echo "[5]Modificar el documento del empleado responsable del viaje.\n";
-                                    echo "[6]Modificar el numero de licencia del empleado responsable del viaje.\n";
-                                    echo "[7]Volver al menu anterior.\n";
-                                    echo "Ingrese la opcion del menu que desea elegir: ";
-                                    $opcionMenuResponsable = solicitarNumeroEntre(1,7);
-                                    switch($opcionMenuResponsable){//misma situacion que editar empleado
-                                        case 1://modificar numero empleado
-                                            break;
-                                        case 2://modificar nombre empleado
-                                            break;
-                                        case 3://modificar apellido empleado
-                                            break;
-                                        case 4://modificar telefono empleado
-                                            break;
-                                        case 5://modificar documento empleado
-                                            break;
-                                        case 6://modificar numero licencia empleado
-                                            break;
-                                        case 7://volver atras
-                                            break;
-                                    }
-                                }while($opcionMenuResponsable!=7);
+                                echo "no existe empleado con ese id";
                             }
                             break;
                         case 6://editar importe
@@ -361,9 +335,90 @@ switch($opcion){
             echo $unViaje;
         }
         break;
-    case 10://salir
+    case 13://salir
         echo "bai bai";
         break;
+    case 10://mostrar responsable
+        echo "ingrese numero de empleado responsable que desea ver :";
+        $numeroEmpleado = trim(fgets(STDIN));
+        if($responsable->buscar($numeroEmpleado) != null){
+            echo $responsable;
+        }else {
+            echo "el empleado con el numero :" . $numeroEmpleado . " no existe.\n";
+        }
+        break;
+    case 11://editar responsable
+        echo "ingrese numero del empleado responsable que desea editar :";
+        $numeroEmpleado = trim(fgets(STDIN));
+        $responsableP = new Persona;
+        if($responsable->buscar($numeroEmpleado)){
+            switch(0){
+                case 1://cambir nombre
+                    echo "igrese nombre nuevo";
+                    $nombre = trim(fgets(STDIN));
+                    $responsable->setNombre($nombre);
+                    $responsable->modificar();
+                    break;
+                case 2://cambiar apellido
+                    echo "igrese apellido nuevo";
+                    $apellido = trim(fgets(STDIN));
+                    $responsable->setApellido($apellido);
+                    $responsable->modificar();
+                    break;
+                case 3://cambiar telefono
+                    echo "igrese telefono nuevo";
+                    $telefono = trim(fgets(STDIN));
+                    $responsable->setTelefono($telefono);
+                    $responsable->modificar();
+                    break;
+                case 4://cambiar documento
+                    //tengo mis dudas con este, puiede que rompa persona???
+                    echo "igrese documento nuevo";
+                    $documento = trim(fgets(STDIN));
+                    $responsable->setDocumento($documento);
+                    $responsable->modificar();
+                    break;
+                case 5://cambiar numero licencia
+                    echo "igrese telefono nuevo";
+                    $numLicencia = trim(fgets(STDIN));
+                    $responsable->setNumLicencia($numLicencia);
+                    $responsable->modificar();
+                    break;
+                case 6://volver atras
+                    break;
+            }
+        }else {
+            echo "el empleado con el numero :" . $numeroEmpleado . " no existe.\n";
+        }
+        break;
+    case 12://borrar responsable
+        verIDsResponsables();
+        echo "ingrese numero de empleado responsable que desea ver :";
+        $numeroEmpleado = trim(fgets(STDIN));
+        if($responsable->buscar($numeroEmpleado) != null){
+            if(($viajes = $viaje->listar()) != null){
+                echo "el empleado es responsable de los siguientes viajes:";
+                echo "---------------------------------------------------";
+                foreach($viajes as $v){
+                    echo $v;
+                }
+                echo "---------------------------------------------------";
+                echo "seguro que quere borra? (S/N)";
+                $respuesta = strtoupper(trim(fgets(STDIN)));
+                if($respuesta != "S"){
+                    echo "borrado, no re vimo";
+                    $responsable->eliminar();
+                }else{
+                    echo "operacion abortada como los bebes :-)";
+                }
+            } else {
+                echo "borrado, no re vimo";
+                $responsable->eliminar();
+            }
+        }else {
+            echo "el empleado con el numero :" . $numeroEmpleado . " no existe.\n";
+        }
+        break;
 }
-}while($opcion != 10);
+}while($opcion != 13);
 ?>
