@@ -117,7 +117,14 @@ switch($opcion){
         echo "Ingrese el id del viaje que desea editar: ";
         $idViaje = trim(fgets(STDIN));
         if($viaje->buscar($idviaje)){
-            echo "que datos queres editar";
+            echo "[1]Modificar el id del viaje.\n";
+            echo "[2]Modificar el destino del viaje.\n";
+            echo "[3]Modificar la cantidad maxima de pasajeros en el viaje.\n";
+            echo "[4]Editar los datos de un pasajero.\n";
+            echo "[5]Editar los datos de un empleado responsable por el viaje.\n";
+            echo "[6]Modificar el costo del viaje.\n";
+            echo "[7]Editar coleccion de pasajeros del viaje???????????????????????????.\n";
+            echo "[8]Volver al menu anterior.\n";
             $opcion = solicitarNumeroEntre(1,7);
             do{
                 switch($opcion){
@@ -155,8 +162,12 @@ switch($opcion){
                             echo "\nIngrese el numero del pasajero desea modificar: ";
                             //Solicita un numero que no sobrepase la cantidad de pasajeros
                             $numeroDePasajero = solicitarNumeroEntre(1,$cantPasajeros);
-                            echo "Ingrese que dato desea modificar (nombre, apellido, telefono o dni): ";
-                            $opcion = trim(fgets(STDIN));
+                            echo "[1]Modificar el nombre del pasajero.\n";
+                            echo "[2]Modificar el apellido del pasajero.\n";
+                            echo "[3]Modificar el telefono del pasajero.\n";
+                            echo "[4]Modificar el documento de el.\n";
+                            echo "[5]Volver al menu anterior.\n";
+                            $opcion = solicitarNumeroEntre(1,5);
                             do{//no sabemos si vamso a tener la coleccion o no, asique depende la implementacion
                                 $opcion = solicitarNumeroEntre(1,5);
                                 switch($opcion){
@@ -182,8 +193,14 @@ switch($opcion){
                         if(0){// !buscarEmpleado($idEmpleado)
                             echo "no existe empleado con ese id";
                         }else{
-                            echo "que dato queres cambiar";
-                            $opcion = solicitarNumeroEntre(1,1);
+                            echo "[1]Modificar el numero empleado del responsable del viaje.\n";
+                            echo "[2]Modificar el nombre del empleado responsable del viaje.\n";
+                            echo "[3]Modificar el apellido del empleado responsable del viaje.\n";
+                            echo "[4]Modificar el telefono del empleado responsable del viaje.\n";
+                            echo "[5]Modificar el documento del empleado responsable del viaje.\n";
+                            echo "[6]Modificar el numero de licencia del empleado responsable del viaje.\n";
+                            echo "[7]Volver al menu anterior.\n";
+                            $opcion = solicitarNumeroEntre(1,7);
                             do{
                                 switch($opcion){//misma situacion que editar empleado
                                     case 1://modificar numero empleado
