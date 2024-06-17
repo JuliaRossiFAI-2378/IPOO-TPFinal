@@ -91,17 +91,17 @@ class Viaje{
     }
     public function __toString()
     {
-        $cad = "\nIdViaje: ".$this->getIdViaje()."\nDestino: ".$this->getDestino()."\nCantidad maxima de pasajeros: ".
+        $cad = "\nId del viaje: ".$this->getIdViaje()."\nDestino: ".$this->getDestino()."\nCantidad maxima de pasajeros: ".
         $this->getCantMaxPasajeros()."\nCantidad actual de pasajeros: ".count($this->getColPasajeros()).
         "\nCosto del viaje: $".$this->getCostoViaje()."\nRecaudacion total del viaje: $".$this->getSumaCostos().
-        "\n\tInformacion del responsable del viaje";
+        "\n\n\t\tInformacion del responsable del viaje";
         $responsable = new ResponsableV();
         $responsable->buscar($this->getNumEmpleado());
         $cad .= $responsable."\n\t\tInformacion de los pasajeros";
         $pasajeros = $this->getColPasajeros();
         for($i=0; $i<count($pasajeros); $i++){
             $cad .= "\n\tPasajero ".$i+1 .$pasajeros[$i];
-        }   
+        }
         return $cad;
     }
 
@@ -239,7 +239,7 @@ class Viaje{
                     $this->setDestino($result['destino']);
                     $this->setCantMaxPasajeros($result['cantmaxpasajeros']);
                     $this->setIdEmpresa($result['idempresa']);
-                    $this->setNumEmpleado(['rnumeroempleado']);
+                    $this->setNumEmpleado($result['rnumeroempleado']);
                     $this->setCostoViaje($result['importe']);
                     $resp = true;
                 }else{
