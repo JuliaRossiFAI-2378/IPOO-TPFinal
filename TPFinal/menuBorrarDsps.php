@@ -20,7 +20,7 @@ function verIDsEmpresas(){
     $empresa = new Empresa();
     $idEmpresas = $empresa->listar();
     foreach($idEmpresas as $id){
-        echo "\nEmpresa llamada '".$id->getNombre()."' con ID numero ".$id->getIdEmpresa();
+        echo "\nEmpresa con ID ".$id->getIdEmpresa()." llamada '".$id->getNombre()."'";
     }
     echo "\n";
 }
@@ -28,7 +28,7 @@ function verIDsViajes(){
     $viaje = new Viaje();
     $idViaje = $viaje->listar();
     foreach($idViaje as $id){
-        echo "\nViaje con destino a '".$id->getDestino()."' e ID numero ".$id->getIdViaje();
+        echo "\nViaje con ID numero ".$id->getIdViaje()."y destino a '".$id->getDestino()."'";
     }
     echo "\n";
 }
@@ -36,7 +36,7 @@ function verIDsResponsables(){
     $responsable = new ResponsableV();
     $idResponsable = $responsable->listar();
     foreach($idResponsable as $id){
-        echo "\nResponsable llamado/a '".$id->getNombre()."' con ID numero ".$id->getNumEmpleado();
+        echo "\nResponsable con ID numero ".$id->getNumEmpleado()." llamado/a '".$id->getNombre()."'";
     }
     echo "\n";
 }
