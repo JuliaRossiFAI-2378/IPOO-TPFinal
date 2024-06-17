@@ -6,6 +6,8 @@ include_once 'Viaje.php';
 include_once 'Empresa.php';
 include_once 'BDViajes.php';
 $viaje = new Viaje();
+$responsable = new ResponsableV();
+$empresa = new Empresa();
 function solicitarNumeroEntre($minimo,$maximo){
     $numero = trim(fgets(STDIN));
     while (!($numero>=$minimo && $numero<=$maximo) || !(is_numeric($numero))){
@@ -15,14 +17,19 @@ function solicitarNumeroEntre($minimo,$maximo){
     return $numero;
 }
 function seleccionarOpcion(){
+    //deberiamos mostrar las empresas/viajes que se pueden elegir para editar/eliminar/visualizar, maniana veo como
     echo "\n[1] Ingresar un empresa.\n";//funcional, falta hacer a prueba de fallos
     echo "[2] Visualizar datos empresa.\n";//falta testear
     echo "[3] Editar datos empresa.\n";//falta testear
+    //[3]verificar que no se cambie al id de otra empresa 
     echo "[4] Eliminar empresa.\n";//FALTA HACER//creo que ya esta solo falta el checkeo?
+    //[4]mostrar mensaje cuando la empresa es eliminada con exito (ademas de los checkeos que faltan) 
     echo "[5] Ingresar un viaje.\n";//deberia funcionar pero falta testear
     echo "[6] Visualizar datos viaje.\n";//deberia funcionar pero falta testear
+    //[6]testeando esto creo que deberiamos mostrar los viajes disponibles, maniana me fijo como
     echo "[7] Editar datos un viaje.\n";//falta mostrar menu// creo que ya esta?
     echo "[8] Eliminar un viaje.\n";//esta funcional, pero deberia agregarse un mensaje si hay pasajeros en el viaje
+    //[8]mostrar mensaje si se elimina con exito
     echo "[9] Visualizar todos los viajes.\n";//no esta hecho pero deberia funcionar el de testViaje.php
     echo "[10] Salir.\n";
     echo "Ingrese la opcion del menu que desea elegir: ";
