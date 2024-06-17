@@ -123,5 +123,20 @@ class Pasajeros extends Persona{
         }
         return $resp;
     }
+    public function modificarDocumento($documentoAnterior){
+        $resp = false;
+        $baseDatos = new BDViajes();
+        $sql = "UPDATE pasajero SET pdocumento=".$this->getDocumento()." WHERE documento=".$documentoAnterior;
+        if($baseDatos->conectarBD()){
+            if($baseDatos->consulta($sql)){
+                $resp = true;
+            }else{
+                $this->setMensajeError($baseDatos->getERROR());
+            }
+        }else{
+            $this->setMensajeError($baseDatos->getERROR());
+        }
+        return $resp;
+    }
 }
 ?>
