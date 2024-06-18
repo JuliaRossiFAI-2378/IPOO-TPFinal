@@ -123,11 +123,23 @@ class Viaje{
         $this->costoViaje = $costoViaje;
         $this->sumaCostos = $sumaCostos;
     }
-    public function modificarDatosPasajero($numPasajero,$datoPasajero,$nuevoDato){
+    public function modificarDatosPasajero($objPasajero,$datoPasajero,$nuevoDato){
         $pasajeros = $this->getALLPasajeros();
         $seEncontro = false;
         switch($datoPasajero){
-            case "dni":
+            case 1:
+                $objPasajero->setNombre($nuevoDato);
+                $objPasajero->modificar();
+                break;
+            case 2:
+                $objPasajero->setApellido($nuevoDato);
+                $objPasajero->modificar();
+                break;
+            case 3:
+                $objPasajero->setTelefono($nuevoDato);
+                $objPasajero->modificar();
+                break;
+            case 4:
                 $cantPasajeros = count($pasajeros);
                 $i = 0;
                 while($i<$cantPasajeros && !$seEncontro){
@@ -137,21 +149,14 @@ class Viaje{
                     $i++;
                 }
                 if(!$seEncontro){
-                    $pasajeros[$numPasajero]->setDocumento($nuevoDato);
-                    $pasajeros[$numPasajero]->modificar();
+                    $objPasajero->modificarDocumento($nuevoDato);
                 }
                 break;
-            case "nombre":
-                $pasajeros[$numPasajero]->setNombre($nuevoDato);
-                $pasajeros[$numPasajero]->modificar();
+            case 5:
+                $objPasajero->setIdViaje($nuevoDato);
+                $objPasajero->modificar();
                 break;
-            case "apellido":
-                $pasajeros[$numPasajero]->setApellido($nuevoDato);
-                $pasajeros[$numPasajero]->modificar();
-                break;
-            case "telefono":
-                $pasajeros[$numPasajero]->setTelefono($nuevoDato);
-                $pasajeros[$numPasajero]->modificar();
+            case 6:
                 break;
         }
         return $seEncontro;
@@ -170,23 +175,18 @@ class Viaje{
             $i++;
         }
         if(!$seEncontro){
-            $colPasajeros[] = $nuevoPasajero;
             $nombre = $nuevoPasajero->getNombre();
             $apellido = $nuevoPasajero->getApellido();
             $documento = $nuevoPasajero->getDocumento();
             $telefono = $nuevoPasajero->getTelefono();
             $nuevoPasajero->cargar($nombre,$apellido,$documento,$telefono,$this->idViaje);
             $nuevoPasajero->ingresar();
-            $this->setColPasajeros($colPasajeros);
         }
         return $seEncontro;    
     }
     public function eliminarPasajero($numPasajero){
         $colPasajeros = $this->getColPasajeros();
         $colPasajeros[$numPasajero]->eliminar();
-        unset($colPasajeros[$numPasajero]);
-        $colPasajeros = array_values($colPasajeros);
-        $this->setColPasajeros($colPasajeros);
     }
     public function hayPasajesDisponibles(){
         $disponible = false;
