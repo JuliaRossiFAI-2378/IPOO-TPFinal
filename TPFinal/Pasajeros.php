@@ -123,13 +123,13 @@ class Pasajeros extends Persona{
         }
         return $resp;
     }
-    public function modificarDocumento($documentoAnterior){
+    public function modificarDocumento($nuevoDocumento){
         $resp = false;
         $baseDatos = new BDViajes();
-        $sql = "UPDATE pasajero SET pdocumento=".$this->getDocumento()." WHERE documento=".$documentoAnterior;
+        $sql = "UPDATE pasajero SET pdocumento=".$nuevoDocumento." WHERE pdocumento=".$this->getDocumento();
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
-                if(parent::modificarDocumento($documentoAnterior)){
+                if(parent::modificarDocumento($nuevoDocumento)){
                     $resp = true;
                 }
             }else{

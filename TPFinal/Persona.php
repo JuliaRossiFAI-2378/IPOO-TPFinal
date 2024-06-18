@@ -160,10 +160,10 @@ class Persona{
         return $resp;
     }
 
-    public function modificarDocumento($documentoAnterior){
+    public function modificarDocumento($nuevoDocumento){
         $resp = false;
         $baseDatos = new BDViajes();
-        $sql = "UPDATE persona SET documento=".$this->getDocumento()." WHERE documento=".$documentoAnterior;
+        $sql = "UPDATE persona SET documento=".$nuevoDocumento." WHERE documento=".$this->getDocumento();
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
                 $resp = true;

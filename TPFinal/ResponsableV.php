@@ -134,5 +134,22 @@ class ResponsableV extends Persona{
         }
         return $resp;
     }
+    public function modificarDocumento($nuevoDocumento){
+        $resp = false;
+        $baseDatos = new BDViajes();
+        $sql = "UPDATE responsable SET rdocumento=".$nuevoDocumento." WHERE rdocumento=".$this->getDocumento();
+        if($baseDatos->conectarBD()){
+            if($baseDatos->consulta($sql)){
+                if(parent::modificarDocumento($nuevoDocumento)){
+                    $resp = true;
+                }
+            }else{
+                $this->setMensajeError($baseDatos->getERROR());
+            }
+        }else{
+            $this->setMensajeError($baseDatos->getERROR());
+        }
+        return $resp;
+    }
 }
 ?>
