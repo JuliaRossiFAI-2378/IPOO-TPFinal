@@ -58,14 +58,14 @@ function verIDsResponsables(){
     return $contienePasajeros;
 }*/
 function seleccionarOpcion(){
-    echo "\n[1] Ingresar, editar o eliminar una empresa.\n";//funcional, falta hacer a prueba de fallos
-    echo "[2] Visualizar datos empresa.\n";//falta testear
+    echo "\n[1] Ingresar, editar o eliminar una empresa.\n";//testear
+    echo "[2] Visualizar datos empresa.\n";//testear
     echo "[3] Ingresar, editar o eliminar un viaje.\n";//ARREGLAR ELIMINAR VIAJE  mostrar mensaje si se elimina con exito
     echo "[4] Visualizar datos de un viaje o todos los viajes.\n";//deberia funcionar pero falta testear
     echo "[5] Ingresar, editar o eliminar el responsable de un viaje.\n";//TERMINAR EDITAR DATOS
-    echo "[6] Visualizar datos del responsable de un viaje.\n";
-    echo "[7] Ingresar, editar o eliminar pasajero\n";
-    echo "[8] Visualizar datos de un pasajero o todos los pasajeros de un viaje\n";
+    echo "[6] Visualizar datos del responsable de un viaje.\n";//testear
+    echo "[7] Ingresar, editar o eliminar pasajero\n";//testear
+    echo "[8] Visualizar datos de los pasajeros de un viaje\n";//testear
     echo "[9] Salir.\n";
     echo "Ingrese la opcion del menu que desea elegir: ";
     //Verifica que el numero elegido vaya unicamente entre las opciones del menu
@@ -206,23 +206,31 @@ switch($opcion){
             $opcionMenuViaje = solicitarNumeroEntre(1,4);
             switch($opcionMenuViaje){
                 case 1://ingresar viaje
-                    echo "Ingrese el destino del viaje: ";
-                    $destViaje = trim(fgets(STDIN));
-                    echo "Ingrese la cantidad maxima de pasajeros: ";
-                    $cantidadMaximaPasajeros = trim(fgets(STDIN));
-                    verIDsEmpresas();
-                    echo "Ingrese el ID de la empresa que realiza el viaje: ";
-                    $idEmpresa = trim(fgets(STDIN));
-                    echo "Ingrese el costo del viaje: ";
-                    $costoViaje = trim(fgets(STDIN));
-                    verIDsResponsables();
-                    echo "Ingrese el numero de empleado del responsable: ";
-                    $numeroEmpleado = trim(fgets(STDIN));
-                    $viaje->cargar(null,$destViaje,$cantidadMaximaPasajeros,$idEmpresa,[],$numeroEmpleado, $costoViaje, 0);
-                    if($viaje->ingresar()){
-                        echo "\nViaje ingresado con exito.";
+                    if($empresa->listar() != null){
+                        if($responsable->listar() != null){
+                            echo "Ingrese el destino del viaje: ";
+                            $destViaje = trim(fgets(STDIN));
+                            echo "Ingrese la cantidad maxima de pasajeros: ";
+                            $cantidadMaximaPasajeros = trim(fgets(STDIN));
+                            verIDsEmpresas();
+                            echo "Ingrese el ID de la empresa que realiza el viaje: ";
+                            $idEmpresa = trim(fgets(STDIN));
+                            echo "Ingrese el costo del viaje: ";
+                            $costoViaje = trim(fgets(STDIN));
+                            verIDsResponsables();
+                            echo "Ingrese el numero de empleado del responsable: ";
+                            $numeroEmpleado = trim(fgets(STDIN));
+                            $viaje->cargar(null,$destViaje,$cantidadMaximaPasajeros,$idEmpresa,[],$numeroEmpleado, $costoViaje, 0);
+                            if($viaje->ingresar()){
+                                echo "\nViaje ingresado con exito.";
+                            }else{
+                                //tenemos que manejar mejor los errores para que no explote en caso de fallar
+                            }
+                        }else{
+                            echo "\nNo hay ningun responsable registrado, por ende no se puede registrar el viaje, se regresara al menu anterior.\n";
+                        }
                     }else{
-                        //tenemos que manejar mejor los errores para que no explote en caso de fallar
+                        echo "\nNo hay ninguna empresa registrada, por ende no se puede registrar el viaje, se regresara al menu anterior.\n";
                     }
                     break;
                 case 2://editar datos viaje if !=null listo  
@@ -507,7 +515,7 @@ switch($opcion){
             echo "\nNo hay ningun responsable registrado, sera regresado al menu anterior.\n";
         }
         break;
-    case 7://Ingresar,editar,eliminar pasajero
+    case 7://Ingresar,editar,eliminar pasajero !=null listo 
         do{
             echo "\n[1] Ingresar un pasajero.\n";
             echo "[2] Editar datos de un pasajero.\n";
@@ -517,11 +525,11 @@ switch($opcion){
             $opcionMenuPasajeros = solicitarNumeroEntre(1,4);
             switch($opcionMenuPasajeros){
                 case 1://Ingresar pasajero
-                    verIDsViajes();
-                    echo "Ingrese el ID del viaje donde ingresara al pasajero: ";
-                    $idViaje = trim(fgets(STDIN));
-                    if($idViaje != null){
-                        if($viaje->listar() != null){
+                    if($viaje->listar() != null){
+                        verIDsViajes();
+                        echo "Ingrese el ID del viaje donde ingresara al pasajero: ";
+                        $idViaje = trim(fgets(STDIN));
+                        if($idViaje != null){
                             if($viaje->buscar($idViaje)){
                                 if($viaje->hayPasajesDisponibles()){
                                     echo "Ingrese el nombre del pasajero: ";
@@ -547,79 +555,87 @@ switch($opcion){
                                 echo "\nEse ID no corresponde a ningun viaje, sera regresado al menu anterior.\n";  
                             } 
                         }else{
-                            echo "\nNo hay ningun viaje registrado, sera regresado al menu anterior.\n";
+                            echo "\nNo ingreso ningun ID, se regresara al menu anterior.\n";
                         }
                     }else{
-                        echo "\nNo ingreso ningun ID, se regresara al menu anterior.\n";
+                        echo "\nNo hay ningun viaje registrado, sera regresado al menu anterior.\n";
                     }
                     break;
                 case 2://Editar Pasajero  if !=null listo 
-                    verIDsViajes();
-                    echo "Ingrese el ID del viaje donde se encuentra el pasajero que desea editar: ";
-                    $idViaje = trim(fgets(STDIN));
-                    if($idViaje != null){
-                        if($viaje->buscar($idViaje)){
-                            $pasajeros = $viaje->getColPasajeros();
-                            if(count($pasajeros) == 0){
-                                echo "No hay pasajeros registrados en ese viaje, sera regresado al menu anterior.\n";
-                            }else{
-                                for($i=0; $i<count($pasajeros); $i++){
-                                    echo "\n\tPasajero numero: ".$i+1;
-                                    echo $pasajeros[$i];
-                                }
-                                echo "\nIngrese el numero del pasajero desea modificar: ";
-                                $numeroDePasajero = solicitarNumeroEntre(1,count($pasajeros));
-                                $pasajero->buscar($pasajeros[$numeroDePasajero-1]->getDocumento());
-                                do{
-                                    echo "\n[1] Editar el nombre del pasajero.\n";
-                                    echo "[2] Editar el apellido del pasajero.\n";
-                                    echo "[3] Editar el telefono del pasajero.\n";
-                                    echo "[4] Editar el documento del pasajero.\n";
-                                    echo "[5] Editar el ID del viaje del pasajero.\n";
-                                    echo "[6] Volver al menu anterior.\n";
-                                    echo "Ingrese la opcion del menu que desea elegir: ";
-                                    $opcionMenuDatosPasajero = solicitarNumeroEntre(1,6);
-                                    echo "Ingrese el nuevo dato: ";
-                                    $nuevoDato = trim(fgets(STDIN));
-                                    if(!$viaje->modificarDatosPasajero($pasajero, $opcionMenuDatosPasajero,$nuevoDato)){
-                                        echo "Dato modificado con exito.";
-                                    }else{
-                                        echo "\nYa existe un pasajero con ese dni en este u otro viaje.\n";
+                    if($viaje->listar() != null){
+                        verIDsViajes();
+                        echo "Ingrese el ID del viaje donde se encuentra el pasajero que desea editar: ";
+                        $idViaje = trim(fgets(STDIN));
+                        if($idViaje != null){
+                            if($viaje->buscar($idViaje)){
+                                $pasajeros = $viaje->getColPasajeros();
+                                if(count($pasajeros) == 0){
+                                    echo "No hay pasajeros registrados en ese viaje, sera regresado al menu anterior.\n";
+                                }else{
+                                    for($i=0; $i<count($pasajeros); $i++){
+                                        echo "\n\tPasajero numero: ".$i+1;
+                                        echo $pasajeros[$i];
                                     }
-                                }while($opcionMenuDatosPasajero != 6);
+                                    echo "\nIngrese el numero del pasajero desea modificar: ";
+                                    $numeroDePasajero = solicitarNumeroEntre(1,count($pasajeros));
+                                    $pasajero->buscar($pasajeros[$numeroDePasajero-1]->getDocumento());
+                                    do{
+                                        echo "\n[1] Editar el nombre del pasajero.\n";
+                                        echo "[2] Editar el apellido del pasajero.\n";
+                                        echo "[3] Editar el telefono del pasajero.\n";
+                                        echo "[4] Editar el documento del pasajero.\n";
+                                        echo "[5] Editar el ID del viaje del pasajero.\n";
+                                        echo "[6] Volver al menu anterior.\n";
+                                        echo "Ingrese la opcion del menu que desea elegir: ";
+                                        $opcionMenuDatosPasajero = solicitarNumeroEntre(1,6);
+                                        echo "Ingrese el nuevo dato: ";
+                                        $nuevoDato = trim(fgets(STDIN));
+                                        if(!$viaje->modificarDatosPasajero($pasajero, $opcionMenuDatosPasajero,$nuevoDato)){
+                                            echo "Dato modificado con exito.";
+                                        }else{
+                                            echo "\nYa existe un pasajero con ese dni en este u otro viaje.\n";
+                                        }
+                                    }while($opcionMenuDatosPasajero != 6);
+                                }
+                            }else{
+                                echo "Ese ID no corresponde a ningun viaje.";
                             }
                         }else{
-                            echo "Ese ID no corresponde a ningun viaje.";
-                        }
+                            echo "\nNo ingreso ningun ID, se regresara al menu anterior.\n";
+                        }                        
                     }else{
-                        echo "\nNo ingreso ningun ID, se regresara al menu anterior.\n";
+                        echo "\nNo hay ningun viaje registrado, por ende no hay pasajeros, se regresara al menu anterior.\n";
                     }
                     break;
                 case 3://Eliminar pasajero
-                    echo "Ingrese el ID del viaje en el que desea eliminar un pasajero: ";
-                    $idViaje = trim(fgets(STDIN));
-                    if($idViaje != null){
-                        if($viaje->buscar($idViaje)){
-                            $pasajeros = $viaje->getColPasajeros();
-                            $cantPasajeros = count($pasajeros);
-                            if($cantPasajeros == 0){
-                                echo "\nNo hay pasajeros registrados en ese viaje, sera regresado al menu anterior.\n";
-                            }else{
-                                //Muestra los pasajeros asi el usuario sabe que numero de pasajero elegir
-                                for($i=0; $i<$cantPasajeros; $i++){
-                                    echo "\nPasajero numero: ".$i+1;
-                                    echo $pasajeros[$i];
+                    if($viaje->listar() != null){
+                        echo "Ingrese el ID del viaje en el que desea eliminar un pasajero: ";
+                        $idViaje = trim(fgets(STDIN));
+                        if($idViaje != null){
+                            if($viaje->buscar($idViaje)){
+                                $pasajeros = $viaje->getColPasajeros();
+                                $cantPasajeros = count($pasajeros);
+                                if($cantPasajeros == 0){
+                                    echo "\nNo hay pasajeros registrados en ese viaje, sera regresado al menu anterior.\n";
+                                }else{
+                                    //Muestra los pasajeros asi el usuario sabe que numero de pasajero elegir
+                                    for($i=0; $i<$cantPasajeros; $i++){
+                                        echo "\nPasajero numero: ".$i+1;
+                                        echo $pasajeros[$i];
+                                    }
+                                    echo "\nIngrese el numero del pasajero desea eliminar: ";
+                                    //Solicita un numero que no sobrepase la cantidad de pasajeros
+                                    $numeroDePasajero = solicitarNumeroEntre(1,$cantPasajeros);
+                                    $viaje->eliminarPasajero($numeroDePasajero-1);
                                 }
-                                echo "\nIngrese el numero del pasajero desea eliminar: ";
-                                //Solicita un numero que no sobrepase la cantidad de pasajeros
-                                $numeroDePasajero = solicitarNumeroEntre(1,$cantPasajeros);
-                                $viaje->eliminarPasajero($numeroDePasajero-1);
+                            }else{
+                                echo "Ese ID no corresponde a ningun viaje";
                             }
                         }else{
-                            echo "Ese ID no corresponde a ningun viaje";
-                        }
+                            echo "\nNo ingreso ningun ID, se regresara al menu anterior.";
+                        }                                                
                     }else{
-                        echo "\nNo ingreso ningun ID, se regresara al menu anterior.";
+                        echo "\nNo hay ningun viaje registrado, por ende no hay pasajeros, se regresara al menu anterior.\n";
                     }
                     break;
                 case 4://Volver atras
@@ -627,10 +643,31 @@ switch($opcion){
             }
         }while($opcionMenuPasajeros != 4);
         break;
-    case 8://Visualizar datos pasajero/s
+    case 8://Visualizar datos pasajero/s !=null listo 
+        if($viaje->listar() != null){
+            verIDsViajes();
+            echo "Ingrese el ID del viaje donde se encuentra el/los pasajero/s que desea visualizar: ";
+            $idViaje = trim(fgets(STDIN));
+            if($idViaje != null){
+                if($viaje->buscar($idViaje)){
+                    $pasajeros = $viaje->getColPasajeros();
+                    foreach($pasajeros as $pasajero){
+                        echo "---------------------------------------------";
+                        echo $pasajero;
+                        echo "---------------------------------------------";
+                    }
+                }else{
+                    echo "Ese ID no corresponde a ningun viaje, se regresara al menu anterior.\n";
+                }
+            }else{
+                echo "\nNo ingreso ningun ID, se regresara al menu anterior.\n";
+            }
+        }else{
+            echo "\nNo hay ningun viaje registrado, por ende no hay pasajeros, se regresara al menu anterior.\n";
+        }
         break;
     case 9://salir
-    echo "bai bai";
+        echo "bai bai";
         break;
 }
 }while($opcion != 9);
