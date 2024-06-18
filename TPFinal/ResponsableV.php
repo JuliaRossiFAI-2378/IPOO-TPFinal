@@ -81,8 +81,8 @@ class ResponsableV extends Persona{
         $baseDatos = new BDViajes();
         $resp = false;
         if(parent::ingresar()){
-            $sql = "INSERT INTO responsable (rdocumento, numeroempleado, numerolicencia) VALUES (".parent::getDocumento().
-                    ", ".$this->getNumEmpleado().", ".$this->getNumLicencia().")";
+            $sql = "INSERT INTO responsable (numeroempleado, numerolicencia, rdocumento) VALUES (NULL, ".
+                $this->getNumLicencia().", ".parent::getDocumento().")";
             if($baseDatos->conectarBD()){
                 if($baseDatos->consulta($sql)){
                     $resp = true;
