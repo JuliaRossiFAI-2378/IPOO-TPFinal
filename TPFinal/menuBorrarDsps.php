@@ -457,6 +457,51 @@ switch($opcion){
         }
         break;
     case 7://Ingresar,editar,eliminar pasajero
+        do{
+            echo "\n[1] Ingresar un pasajero.\n";
+            echo "[2] Editar datos de un pasajero.\n";
+            echo "[3] Eliminar un pasajero.\n";
+            echo "[4] Volver al menu anterior.\n";
+            echo "Ingrese la opcion del menu que desea elegir: ";
+            $opcionMenuPasajeros = solicitarNumeroEntre(1,4);
+            switch($opcionMenuPasajeros){
+                case 1://Ingresar pasajero
+                    verIDsViajes();
+                    echo "Ingrese el id del viaje donde ingresara al pasajero: ";
+                    $idViaje = trim(fgets(STDIN));
+                    if($viaje->buscar($idViaje)){
+                        if($viaje->hayPasajesDisponibles()){
+                            echo "Ingrese el nombre del pasajero: ";
+                            $nombrePasajero = trim(fgets(STDIN));
+                            echo "Ingrese el apellido del pasajero: ";
+                            $apellidoPasajero = trim(fgets(STDIN));
+                            echo "Ingrese el numero de documento del pasajero: ";
+                            $documentoPasajero = trim(fgets(STDIN));
+                            echo "Ingrese el numero de telefono del pasajero: ";
+                            $telefonoPasajero = trim(fgets(STDIN));
+                            $viaje->buscar($idViaje);
+                            $nuevoPasajero = new Pasajeros();
+                            $nuevoPasajero->cargar($nombrePasajero,$apellidoPasajero,$documentoPasajero,$telefonoPasajero,$idViaje);
+                            if(!$viaje->agregarPasajero($nuevoPasajero)){
+                                echo "\nEl pasajero fue agregado exitosamente.\n";
+                            }else{
+                                echo "\nYa existe un pasajero con ese dni.\n";
+                            }
+                        }else{
+                            echo "\nNo se pueden agregar mas pasajeros, el viaje ya alcanzo su capacidad maxima.\n";
+                        }
+                    }else{
+                        echo "Ese id no corresponde a ningun viaje";  
+                    }         
+                    break;
+                case 2://Editar Pasajero
+                    break;
+                case 3://Eliminar pasajero
+                    break;
+                case 4://Volver atras
+                    break;    
+            }
+        }while($opcionMenuPasajeros != 4);
         break;
     case 8://Visualizar datos pasajero/s
         break;
