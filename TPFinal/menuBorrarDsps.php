@@ -9,6 +9,15 @@ $viaje = new Viaje();
 $responsable = new ResponsableV();
 $empresa = new Empresa();
 $pasajero = new Pasajeros();
+<<<<<<< HEAD
+=======
+$persona = new Persona();// <:-)
+
+/** recibe un intervalo y pide num valido por pantalla
+ * @param int $minimo, $maximo
+ * @return int
+ */
+>>>>>>> 7a15dd9 (hoy me levante y la segunda cosa que hice fue ponerme a limpiar y trapear la cocina dos horas porque hay una gotera que causo un poco de inundacion a la noche, pero lo hice sonriendo porque lo primero que hice hoy fue ver las notas de bases de datos y ver que el niño gpt tiene que ir al recuperatorio y dar los dos parciales :) ah tambien puse documentacion y checkeos de tipo string en case 1)
 function solicitarNumeroEntre($minimo,$maximo){
     $numero = trim(fgets(STDIN));
     while (!($numero>=$minimo && $numero<=$maximo) || !(is_numeric($numero))){
@@ -17,30 +26,71 @@ function solicitarNumeroEntre($minimo,$maximo){
     }
     return $numero;
 }
+/** muestra una lista de empresas por pantalla
+ */
 function verIDsEmpresas(){
     $empresa = new Empresa();
     $idEmpresas = $empresa->listar();
+    echo "\nLista de empresas:\n";
     foreach($idEmpresas as $id){
         echo "\nEmpresa con ID ".$id->getIdEmpresa()." llamada '".$id->getNombre()."'";
     }
     echo "\n";
 }
+/** muestra una lista de viajes por pantalla
+ */
 function verIDsViajes(){
     $viaje = new Viaje();
     $idViaje = $viaje->listar();
+    echo "\nLista de viajes:\n";
     foreach($idViaje as $id){
         echo "\nViaje con ID numero ".$id->getIdViaje()." y destino a '".$id->getDestino()."'";
     }
     echo "\n";
 }
+/** muestra una lista de responsables por pantalla
+ */
 function verIDsResponsables(){
     $responsable = new ResponsableV();
     $idResponsable = $responsable->listar();
+    echo "\nLista de responsables:\n";
     foreach($idResponsable as $id){
         echo "\nResponsable con ID numero ".$id->getNumEmpleado()." llamado/a '".$id->getNombre()."'";
     }
     echo "\n";
 }
+<<<<<<< HEAD
+=======
+/** recibe un dato y devuelve si es un numero entero
+ * @param any $dato
+ * @return boolean
+ */
+function esNum($dato){
+    $numero = false;
+    if(is_numeric($dato)){
+        $dato += 0;//se convierte en int o float segun su valor
+        if(is_int($dato) && $dato>0){
+            $numero = true;
+        }
+    }else{
+        echo "\nDebe ingresar un numero entero mayor a cero.\n";
+    }
+    return $numero;
+}
+/** recibe un dato y devuelve si es un string no vacio
+ * @param any $dato
+ * @return boolean
+ */
+function esString($dato){//no creo usar esto nunca, no vale la pena
+    $cadena = false;
+    if(is_string($dato) && $dato != ""){
+        $cadena = true;
+    }else{
+        echo "\nDebe ingresar una cadena de uno o mas caracteres.\n";
+    }
+    return $cadena;
+}
+>>>>>>> 7a15dd9 (hoy me levante y la segunda cosa que hice fue ponerme a limpiar y trapear la cocina dos horas porque hay una gotera que causo un poco de inundacion a la noche, pero lo hice sonriendo porque lo primero que hice hoy fue ver las notas de bases de datos y ver que el niño gpt tiene que ir al recuperatorio y dar los dos parciales :) ah tambien puse documentacion y checkeos de tipo string en case 1)
 //asume que el id que recibe funciona
 /*function pasajerosViaje($idViaje){
     $contienePasajeros = true;
@@ -57,6 +107,8 @@ function verIDsResponsables(){
     }
     return $contienePasajeros;
 }*/
+/** muestra el menu de opciones por pantalla
+ */
 function seleccionarOpcion(){
     echo "\n[1] Ingresar, editar o eliminar una empresa.\n";//testear
     echo "[2] Visualizar datos empresa.\n";//testear
@@ -75,11 +127,10 @@ function seleccionarOpcion(){
 
 do{
     $opcion = seleccionarOpcion();
-//en los editar, poner funcion que garantize recibir el tipo de dato correcto, se puede poner modificar al salir del menu
 switch($opcion){
-    case 1://ingresar/editar/eliminar una empresa if !=null listo
+    case 1://ingresar/editar/eliminar una empresa
         do{
-            echo "\n[1] Ingresar una empresa.\n";//funcional, falta hacer a prueba de fallos
+            echo "\n[1] Ingresar una empresa.\n";//falta testear
             echo "[2] Editar datos empresa.\n";//falta testear
             echo "[3] Eliminar empresa.\n";//falta testear
             echo "[4] Volver al menu anterior.\n";
@@ -89,14 +140,17 @@ switch($opcion){
                 case 1://ingresar empresa
                     echo "Ingrese el nombre de la empresa: ";
                     $nombreEmpresa = trim(fgets(STDIN));
-                    echo "Ingrese la direccion de la empresa: ";
-                    $direccionEmpresa = trim(fgets(STDIN));
-                    $empresa = new Empresa();
-                    $empresa->cargar(null,$nombreEmpresa,$direccionEmpresa);
-                    //agregar que si uno es null no cargue ni ingrese la empresa
-                    $empresa->ingresar();
+                    if(esString($nombreEmpresa)){
+                        echo "Ingrese la direccion de la empresa: ";
+                        $direccionEmpresa = trim(fgets(STDIN));
+                        if(esString($direccionEmpresa)){
+                            $empresa = new Empresa();
+                            $empresa->cargar(null,$nombreEmpresa,$direccionEmpresa);
+                            $empresa->ingresar();
+                        }
+                    }
                     break;
-                case 2://editar datos empresa if !=null listo
+                case 2://editar datos empresa
                     if($empresa->listar() != null){
                         verIDsEmpresas();
                         echo "\nIngrese el ID de la empresa que desea editar: ";
@@ -113,16 +167,20 @@ switch($opcion){
                                         case 1://editar nombre empresa
                                             echo "Ingrese el nuevo nombre de empresa: ";
                                             $nuevoNombre = trim(fgets(STDIN));
-                                            $empresa->setNombre($nuevoNombre);
-                                            $empresa->modificar();
-                                            echo "\nCambio realizado con exito.";
+                                            if(esString($nuevoNombre)){
+                                                $empresa->setNombre($nuevoNombre);
+                                                $empresa->modificar();
+                                                echo "\nCambio realizado con exito.";
+                                            }
                                             break;
                                         case 2://editar direccion empresa
                                             echo "Ingrese la nueva direccion de empresa: ";
                                             $nuevoDireccion = trim(fgets(STDIN));
-                                            $empresa->setDireccion($nuevoDireccion);
-                                            $empresa->modificar();
-                                            echo "\nCambio realizado con exito.";
+                                            if(esString($nuevoDireccion)){
+                                                $empresa->setDireccion($nuevoDireccion);
+                                                $empresa->modificar();
+                                                echo "\nCambio realizado con exito.";
+                                            }
                                             break;
                                         case 3://volver atras
                                             break;
