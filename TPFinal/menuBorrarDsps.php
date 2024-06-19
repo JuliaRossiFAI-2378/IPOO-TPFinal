@@ -588,13 +588,22 @@ switch($opcion){
                                         echo "[6] Volver al menu anterior.\n";
                                         echo "Ingrese la opcion del menu que desea elegir: ";
                                         $opcionMenuDatosPasajero = solicitarNumeroEntre(1,6);
-                                        echo "Ingrese el nuevo dato: ";
-                                        $nuevoDato = trim(fgets(STDIN));
-                                        if(!$viaje->modificarDatosPasajero($pasajero, $opcionMenuDatosPasajero,$nuevoDato)){
-                                            echo "Dato modificado con exito.";
+                                        if($opcionMenuDatosPasajero == 5){
+                                            verIDsViajes();
+                                            echo "Elija el nuevo ID de viaje para el pasajero";
                                         }else{
-                                            echo "\nYa existe un pasajero con ese dni en este u otro viaje.\n";
+                                            echo "Ingrese el nuevo dato: ";
                                         }
+                                        $nuevoDato = trim(fgets(STDIN));
+                                        if($nuevoDato != null){
+                                            if(!$viaje->modificarDatosPasajero($pasajero, $opcionMenuDatosPasajero,$nuevoDato)){
+                                                echo "Dato modificado con exito.";
+                                            }else{
+                                                echo "\nYa existe un pasajero con ese dni en este u otro viaje.\n";
+                                            }
+                                        }else{
+                                            echo "\nNo ingreso ningun dato, se regresara al menu anterior.\n";
+                                        }                                        
                                     }while($opcionMenuDatosPasajero != 6);
                                 }
                             }else{
