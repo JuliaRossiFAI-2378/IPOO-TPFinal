@@ -102,14 +102,6 @@ class Viaje{
         }else{
             $cad .= "\nEl viaje NO tiene un responsable, deberia asignarle uno.";
         }
-        $cad .= "\n\t\tInformacion de los pasajeros";
-        $pasajeros = $this->getColPasajeros();
-        if(count($pasajeros) == 0){
-            $cad .= "\nEl viaje no tiene pasajeros por el momento.";
-        }
-        for($i=0; $i<count($pasajeros); $i++){
-            $cad .= "\n\tPasajero ".$i+1 .$pasajeros[$i];
-        }
         return $cad;
     }
 
