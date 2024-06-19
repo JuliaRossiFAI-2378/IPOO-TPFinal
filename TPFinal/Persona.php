@@ -61,7 +61,7 @@ class Persona{
     {
         $baseDatos = new BDViajes();
         $resp = false;
-        $query = "SELECT * FROM persona WHERE documento=".$documento;
+        $query = "SELECT * FROM personas WHERE documento=".$documento;
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($query)){
                 if(($result = $baseDatos->registro()) != null){
@@ -85,7 +85,7 @@ class Persona{
     public function ingresar(){
         $baseDatos = new BDViajes();
         $resp = false;
-        $sql = "INSERT INTO persona(documento, apellido, nombre, telefono) VALUES (".$this->getDocumento().",'".$this->getApellido().
+        $sql = "INSERT INTO personas(documento, apellido, nombre, telefono) VALUES (".$this->getDocumento().",'".$this->getApellido().
         "','".$this->getNombre()."','".$this->getTelefono()."')";
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
@@ -102,7 +102,7 @@ class Persona{
     public function listar($condicion = ""){
         $resultados = null;
         $baseDatos = new BDViajes();
-        $sql = "SELECT * FROM persona";
+        $sql = "SELECT * FROM personas";
         if($condicion != ""){
             $sql .= " WHERE ".$condicion;
         }
@@ -130,7 +130,7 @@ class Persona{
     public function eliminar(){
         $resp = false;
         $baseDatos = new BDViajes();
-        $sql = "DELETE FROM persona WHERE documento=".$this->getDocumento();
+        $sql = "DELETE FROM personas WHERE documento=".$this->getDocumento();
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
                 $resp = true;
@@ -146,7 +146,7 @@ class Persona{
     public function modificar(){
         $resp = false;
         $baseDatos = new BDViajes();
-        $sql = "UPDATE persona SET nombre='".$this->getNombre()."', apellido='".$this->getApellido().
+        $sql = "UPDATE personas SET nombre='".$this->getNombre()."', apellido='".$this->getApellido().
             "', telefono=".$this->getTelefono()." WHERE documento=".$this->getDocumento();
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
@@ -160,7 +160,7 @@ class Persona{
         return $resp;
     }
 
-    public function modificarDocumento($nuevoDocumento){
+   /**public function modificarDocumento($nuevoDocumento){
         $resp = false;
         $baseDatos = new BDViajes();
         $sql = "UPDATE persona SET documento=".$nuevoDocumento." WHERE documento=".$this->getDocumento();
@@ -174,6 +174,6 @@ class Persona{
             $this->setMensajeError($baseDatos->getERROR());
         }
         return $resp;
-    }
+    }*/
 }
 ?>

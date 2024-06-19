@@ -1,29 +1,29 @@
 CREATE DATABASE bdviajes; 
 USE bdviajes;
 
-CREATE TABLE empresa(
+CREATE TABLE empresas(
     idempresa bigint AUTO_INCREMENT,
     enombre varchar(150),
     edireccion varchar(150),
     PRIMARY KEY (idempresa)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE persona(
+CREATE TABLE personas(
     nombre varchar(50),
     apellido varchar(50),
     telefono int,
     documento int PRIMARY KEY
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE responsable(
+CREATE TABLE responsables(
     numeroempleado bigint AUTO_INCREMENT,
     numerolicencia bigint,
     rdocumento int,
     PRIMARY KEY (numeroempleado),
-    FOREIGN KEY (rdocumento) REFERENCES persona(documento) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (rdocumento) REFERENCES personas(documento) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 	
-CREATE TABLE viaje(
+CREATE TABLE viajes(
     idviaje bigint AUTO_INCREMENT, 
 	destino varchar(150),
     cantmaxpasajeros int,
@@ -31,16 +31,16 @@ CREATE TABLE viaje(
     rnumeroempleado bigint,
     importe float,
     PRIMARY KEY (idviaje),
-    FOREIGN KEY (idempresa) REFERENCES empresa (idempresa) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (rnumeroempleado) REFERENCES responsable (numeroempleado) ON UPDATE CASCADE ON DELETE SET NULL
+    FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (rnumeroempleado) REFERENCES responsables (numeroempleado) ON UPDATE CASCADE ON DELETE SET NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT = 1;
 	
-CREATE TABLE pasajero(
+CREATE TABLE pasajeros(
     pdocumento int,
 	idviaje bigint,
     PRIMARY KEY (pdocumento),
-    FOREIGN KEY (pdocumento) REFERENCES persona(documento) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (idviaje) REFERENCES viaje (idviaje) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (pdocumento) REFERENCES personas(documento) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (idviaje) REFERENCES viajes (idviaje) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8; 
  
   

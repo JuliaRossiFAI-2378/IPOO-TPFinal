@@ -45,7 +45,7 @@ class Viaje{
     }
     public function getColPasajeros(){
         $this->colPasajeros = [];
-        $pasajero = new Pasajeros();
+        $pasajero = new Pasajero();
         $sql = "idviaje=".$this->getIdViaje();
         if($temp = $pasajero->listar($sql)){
             $this->colPasajeros = $temp;
@@ -75,7 +75,7 @@ class Viaje{
     }
     public function getALLPasajeros(){
         $colPasajeros = [];
-        $pasajero = new Pasajeros();
+        $pasajero = new Pasajero();
         if($temp = $pasajero->listar()){
             $colPasajeros = $temp;
         }
@@ -122,19 +122,6 @@ class Viaje{
                 $objPasajero->modificar();
                 break;
             case 4:
-                $cantPasajeros = count($pasajeros);
-                $i = 0;
-                while($i<$cantPasajeros && !$seEncontro){
-                    $dniPasajero = $pasajeros[$i]->getDocumento();
-                    if($dniPasajero == $nuevoDato)
-                        $seEncontro = true;
-                    $i++;
-                }
-                if(!$seEncontro){
-                    $objPasajero->modificarDocumento($nuevoDato);
-                }
-                break;
-            case 5:
                 if($this->buscar($nuevoDato)){
                     $objPasajero->setIdViaje($nuevoDato);
                     $objPasajero->modificar();
@@ -142,13 +129,11 @@ class Viaje{
                     $seEncontro = true;
                 }                
                 break;
-            case 6:
-                break;
         }
         return $seEncontro;
     }
     public function agregarPasajero($nuevoPasajero){
-        $colPasajeros = $this->getColPasajeros();
+        $colPasajeros = $this->getALLPasajeros();
         $cantPasajeros = count($colPasajeros);
         $seEncontro = false;
         $i = 0;
@@ -210,7 +195,7 @@ class Viaje{
     public function buscar($id){
         $baseDatos = new BDViajes();
         $resp = false;
-        $sql = "SELECT * FROM viaje WHERE idviaje=".$id;
+        $sql = "SELECT * FROM viajes WHERE idviaje=".$id;
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
                 if(($result = $baseDatos->registro()) != null){
@@ -236,7 +221,7 @@ class Viaje{
     public function listar($condicion=""){
         $baseDatos = new BDViajes();
         $resultados = null;
-        $sql = "SELECT * FROM viaje";
+        $sql = "SELECT * FROM viajes";
         if($condicion != ""){
             $sql .= " WHERE " .$condicion;
         }

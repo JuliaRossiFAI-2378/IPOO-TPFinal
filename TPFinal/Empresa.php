@@ -50,7 +50,7 @@ class Empresa{
     public function buscar($id){
         $baseDatos = new BDViajes();
         $resp = false;
-        $query = "SELECT * FROM empresa WHERE idempresa=".$id;
+        $query = "SELECT * FROM empresas WHERE idempresa=".$id;
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($query)){
                 if(($tupla = $baseDatos->registro()) != null){
@@ -73,7 +73,7 @@ class Empresa{
     public function ingresar(){
         $baseDatos = new BDViajes();
         $resp = false;
-        $sql = "INSERT INTO empresa(idempresa, enombre, edireccion) VALUES (NULL, '".$this->getNombre()."', '".
+        $sql = "INSERT INTO empresas(idempresa, enombre, edireccion) VALUES (NULL, '".$this->getNombre()."', '".
             $this->getDireccion()."')";
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
@@ -90,7 +90,7 @@ class Empresa{
     public function listar($condicion = ""){
         $resultados = null;
         $baseDatos = new BDViajes();
-        $sql = "SELECT * FROM empresa";
+        $sql = "SELECT * FROM empresas";
         if($condicion != ""){
             $sql .= " WHERE ".$condicion;
         }
@@ -117,7 +117,7 @@ class Empresa{
     public function eliminar(){
         $resp = false;
         $baseDatos = new BDViajes();
-        $sql = "DELETE FROM empresa WHERE idempresa=".$this->getIdEmpresa();
+        $sql = "DELETE FROM empresas WHERE idempresa=".$this->getIdEmpresa();
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){
                 $resp = true;
@@ -133,7 +133,7 @@ class Empresa{
     public function modificar(){
         $resp = false;
         $baseDatos = new BDViajes();
-        $sql = "UPDATE empresa SET enombre='".$this->getNombre()."', edireccion='".$this->getDireccion().
+        $sql = "UPDATE empresas SET enombre='".$this->getNombre()."', edireccion='".$this->getDireccion().
             "' WHERE idempresa=".$this->getIdEmpresa();
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($sql)){

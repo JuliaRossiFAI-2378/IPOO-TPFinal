@@ -35,7 +35,7 @@ class ResponsableV extends Persona{
     public function buscar($numEmpleado){
         $baseDatos = new BDViajes();
         $resp = false;
-        $query = "SELECT * FROM responsable WHERE numeroempleado=".$numEmpleado;
+        $query = "SELECT * FROM responsables WHERE numeroempleado=".$numEmpleado;
         if($baseDatos->conectarBD()){
             if($baseDatos->consulta($query)){
                 if(($result = $baseDatos->registro()) != null){
@@ -58,7 +58,7 @@ class ResponsableV extends Persona{
     public function listar($condicion = ""){
         $resultadoResponsables = null;
         $baseDatos = new BDViajes();
-        $sql = "SELECT * FROM responsable";
+        $sql = "SELECT * FROM responsables";
         if($condicion != ""){
             $sql .= " WHERE ".$condicion;
         }
@@ -81,7 +81,7 @@ class ResponsableV extends Persona{
         $baseDatos = new BDViajes();
         $resp = false;
         if(parent::ingresar()){
-            $sql = "INSERT INTO responsable (numeroempleado, numerolicencia, rdocumento) VALUES (NULL, ".
+            $sql = "INSERT INTO responsables (numeroempleado, numerolicencia, rdocumento) VALUES (NULL, ".
                 $this->getNumLicencia().", ".parent::getDocumento().")";
             if($baseDatos->conectarBD()){
                 if($baseDatos->consulta($sql)){
@@ -101,7 +101,7 @@ class ResponsableV extends Persona{
         $resp = false;
         if(parent::modificar()){
             if($baseDatos->conectarBD()){
-                $sql = "UPDATE responsable SET numeroempleado=".$this->getNumEmpleado().", numerolicencia=".
+                $sql = "UPDATE responsables SET numeroempleado=".$this->getNumEmpleado().", numerolicencia=".
                         $this->getNumLicencia()." WHERE rdocumento=".parent::getDocumento();
                 if($baseDatos->consulta($sql)){
                     $resp = true;
@@ -121,7 +121,7 @@ class ResponsableV extends Persona{
         $baseDatos = new BDViajes();
         $resp = false;
         if($baseDatos->conectarBD()){
-            $sql = "DELETE FROM responsable WHERE rdocumento=".parent::getDocumento();
+            $sql = "DELETE FROM responsables WHERE rdocumento=".parent::getDocumento();
             if($baseDatos->consulta($sql)){
                 if(parent::eliminar()){
                     $resp = true;
@@ -134,22 +134,6 @@ class ResponsableV extends Persona{
         }
         return $resp;
     }
-    public function modificarDocumento($nuevoDocumento){
-        $resp = false;
-        $baseDatos = new BDViajes();
-        $sql = "UPDATE responsable SET rdocumento=".$nuevoDocumento." WHERE rdocumento=".$this->getDocumento();
-        if($baseDatos->conectarBD()){
-            if($baseDatos->consulta($sql)){
-                if(parent::modificarDocumento($nuevoDocumento)){
-                    $resp = true;
-                }
-            }else{
-                $this->setMensajeError($baseDatos->getERROR());
-            }
-        }else{
-            $this->setMensajeError($baseDatos->getERROR());
-        }
-        return $resp;
-    }
+    
 }
 ?>
