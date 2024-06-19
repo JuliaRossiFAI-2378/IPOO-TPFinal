@@ -6,7 +6,6 @@ class Viaje{
     private $colPasajeros;
     private $numEmpleado;
     private $costoViaje;
-    private $sumaCostos;
     private $mensajeError;
     private $idEmpresa;
 
@@ -19,7 +18,6 @@ class Viaje{
         $this->colPasajeros = [];
         $this->numEmpleado = null;
         $this->costoViaje = 0;
-        $this->sumaCostos = 0;
     }
     public function getIdViaje(){
         return $this->idViaje;
@@ -69,12 +67,6 @@ class Viaje{
     public function setCostoViaje($newCostoViaje){
         $this->costoViaje = $newCostoViaje;
     }
-    public function getSumaCostos(){
-        return $this->sumaCostos;
-    }
-    public function setSumaCostos($newSumaCostos){
-        $this->sumaCostos = $newSumaCostos;
-    }
     public function getMensajeError(){
         return $this->mensajeError;
     }
@@ -93,8 +85,7 @@ class Viaje{
     {
         $cad = "\nId del viaje: ".$this->getIdViaje()."\nDestino: ".$this->getDestino()."\nCantidad maxima de pasajeros: ".
         $this->getCantMaxPasajeros()."\nCantidad actual de pasajeros: ".count($this->getColPasajeros()).
-        "\nCosto del viaje: $".$this->getCostoViaje()."\nRecaudacion total del viaje: $".$this->getSumaCostos().
-        "\n\n\t\tInformacion del responsable del viaje";
+        "\nCosto del viaje: $".$this->getCostoViaje()."\n\n\t\tInformacion del responsable del viaje";
         $responsable = new ResponsableV();
         if($this->getNumEmpleado() != null){
             $responsable->buscar($this->getNumEmpleado());
@@ -105,7 +96,7 @@ class Viaje{
         return $cad;
     }
 
-    public function cargar($idViaje,$destino,$cantMaxPasajeros,$idEmpresa,$colPasajeros,$numEmpleado,$costoViaje,$sumaCostos){
+    public function cargar($idViaje,$destino,$cantMaxPasajeros,$idEmpresa,$colPasajeros,$numEmpleado,$costoViaje){
         $this->idViaje = $idViaje;
         $this->destino = $destino;
         $this->cantMaxPasajeros = $cantMaxPasajeros;
@@ -113,7 +104,6 @@ class Viaje{
         $this->colPasajeros = $colPasajeros;
         $this->numEmpleado = $numEmpleado;
         $this->costoViaje = $costoViaje;
-        $this->sumaCostos = $sumaCostos;
     }
     public function modificarDatosPasajero($objPasajero,$datoPasajero,$nuevoDato){
         $pasajeros = $this->getALLPasajeros();
@@ -145,8 +135,12 @@ class Viaje{
                 }
                 break;
             case 5:
-                $objPasajero->setIdViaje($nuevoDato);
-                $objPasajero->modificar();
+                if($this->buscar($nuevoDato)){
+                    $objPasajero->setIdViaje($nuevoDato);
+                    $objPasajero->modificar();
+                }else{
+                    $seEncontro = true;
+                }                
                 break;
             case 6:
                 break;
@@ -188,21 +182,6 @@ class Viaje{
         return $disponible;
     }
 
-    public function venderPasaje($objPasajero){
-        $sumaCostos = $this->getSumaCostos();
-        $costoFinal = -1;
-        if($this->hayPasajesDisponibles()){
-            $this->agregarPasajero($objPasajero);
-            $sumaCostos += $this->getCostoViaje();
-            $costoFinal = $this->getCostoViaje();
-            $porcentajeIncremento = $objPasajero->darPorcentajeIncremento();
-            $porcentajeIncremento = $costoFinal * ($porcentajeIncremento / 100);
-            $sumaCostos += $porcentajeIncremento;
-            $costoFinal += $porcentajeIncremento;
-            $this->setSumaCostos($sumaCostos);
-        }
-        return $costoFinal;
-    }
     
     /**************************************************************************
      ************************************************************************** 
@@ -272,8 +251,7 @@ class Viaje{
                     $numeroEmpleado = $tupla['rnumeroempleado'];
                     $importe = $tupla['importe'];
                     $viaje = new Viaje();
-                    $viaje->cargar($idViaje,$destino,$cantMaxPasajeros,$idEmpresa,[],$numeroEmpleado,$importe,0);
-                    //falta ver como manejar el tema de la colPasajeros y la sumaCostos 
+                    $viaje->cargar($idViaje,$destino,$cantMaxPasajeros,$idEmpresa,[],$numeroEmpleado,$importe);
                     $resultados[] = $viaje;
                 }
             }else{
