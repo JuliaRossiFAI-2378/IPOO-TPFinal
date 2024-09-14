@@ -1,0 +1,4 @@
+Rossi Julia FAI-2378 julia.rossi@est.fi.uncoma.edu.ar
+Lores federico FAI-2948 federico.lores@est.fi.uncoma.edu.ar
+
+repositorio github: https://github.com/JuliaRossiFAI-2378/IPOO-TPFinal.git
